@@ -12,13 +12,16 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using org.in2bits.MyXls;
 
+using MKB.CtrlClass;
+using MKB.SubForm;
+
 namespace MKB
 {
     public partial class MainForm : Form
     {
         // 版本
-        string dateVersion = "20210126";
-        string pushVersion = "V1.1.2";
+        string dateVersion = "20210205";
+        string pushVersion = "V1.1.3";
 
         // 鼠标键盘控制类
         MouseControl m_mouseCtrl = new MouseControl();
@@ -191,7 +194,13 @@ namespace MKB
                 if (buttonRun.Text == buttonRun.Tag.ToString().Split(' ')[0])
                 {
                     // 提示切换英文输入法
-                    if (MessageBox.Show("运行前，请切换至英文输入法！\n点击确定后，开始运行！", "警告", MessageBoxButtons.OKCancel) != DialogResult.OK)
+                    DialogResult dialogResult = MessageBox.Show("是否从当前行开始运行？\n\n" +
+                                                                "点击是，从当前行开始运行。\n" +
+                                                                "点击否，从第一行开始运行。\n" +
+                                                                "点击取消，退出运行。\n\n" +
+                                                                "警告：运行前，请切换至英文输入法！", 
+                                                                "警告", MessageBoxButtons.YesNoCancel);
+                    if (dialogResult == DialogResult.Cancel)
                     {
                         return;
                     }
@@ -221,7 +230,14 @@ namespace MKB
                                                           row.Cells[6].Value.ToString()));
 
                         // 执行操作，即使能定时器
-                        m_runStep         = 0;
+                        if (dialogResult == DialogResult.Yes)       // 从当前行开始运行
+                        {
+                            m_runStep = dataGridViewCmdConfigList.CurrentCell.RowIndex;
+                        }
+                        else                                        // 从第一行开始运行
+                        {
+                            m_runStep = 0;
+                        }
                         m_runStatus       = 1;
                         timerMain.Enabled = true;
                     }
@@ -906,7 +922,7 @@ namespace MKB
         /// <returns></returns>
         public bool IsOutOfDate()
         {
-            int resDays = (Convert.ToDateTime("2021/1/31 23:59:59") - DateTime.Now).Days;
+            int resDays = (Convert.ToDateTime("2021/3/30 23:59:59") - DateTime.Now).Days;
 
             if (resDays > 0)
             {

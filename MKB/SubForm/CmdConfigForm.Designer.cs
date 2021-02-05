@@ -1,4 +1,4 @@
-﻿namespace MKB
+﻿namespace MKB.SubForm
 {
     partial class CmdConfigForm
     {

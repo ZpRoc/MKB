@@ -65,25 +65,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CmdConfig.cs" />
-    <Compile Include="CmdConfigForm.cs">
+    <Compile Include="SubForm\CmdConfig.cs" />
+    <Compile Include="SubForm\CmdConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CmdConfigForm.Designer.cs">
+    <Compile Include="SubForm\CmdConfigForm.Designer.cs">
       <DependentUpon>CmdConfigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Encryption\MachineCode.cs" />
-    <Compile Include="KeybdControl.cs" />
+    <Compile Include="CtrlClass\KeybdControl.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="MouseControl.cs" />
+    <Compile Include="CtrlClass\MouseControl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CmdConfigForm.resx">
+    <EmbeddedResource Include="SubForm\CmdConfigForm.resx">
       <DependentUpon>CmdConfigForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
@@ -123,5 +123,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

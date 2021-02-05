@@ -8,7 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace MKB
+using MKB.CtrlClass;
+
+namespace MKB.SubForm
 {
     public partial class CmdConfigForm : Form
     {
