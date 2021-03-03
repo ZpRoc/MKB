@@ -9,19 +9,24 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 using org.in2bits.MyXls;
 
 using MKB.CtrlClass;
 using MKB.SubForm;
+using MKB.Encryption;
 
 namespace MKB
 {
     public partial class MainForm : Form
     {
         // 版本
-        string dateVersion = "20210205";
-        string pushVersion = "V1.1.3";
+        string dateVersion = "20210303";
+        string pushVersion = "V1.2.0";
+
+        // 是否过期
+        bool m_isOutOfDate = true;
 
         // 鼠标键盘控制类
         MouseControl m_mouseCtrl = new MouseControl();
@@ -36,6 +41,9 @@ namespace MKB
         public MainForm()
         {
             InitializeComponent();
+
+            m_isOutOfDate = IsOutOfDate();
+
         }
 
         // -------------------------------------------------------------------------------- //
@@ -133,8 +141,8 @@ namespace MKB
                 else if (m_runStatus == 0)
                 {
                     // -------------------- 延时控制 -------------------- //
-                    int curTime = (DateTime.Now - m_runTime).Seconds;
-                    int allTime = Convert.ToInt32(m_cmdConfigList[m_runStep].m_time);
+                    double curTime = (DateTime.Now - m_runTime).TotalSeconds;
+                    double allTime = Convert.ToDouble(m_cmdConfigList[m_runStep].m_time);
 
                     if (curTime > allTime)
                     {
@@ -158,7 +166,7 @@ namespace MKB
                         // 延时未到，更新进度条
                         if (Convert.ToInt32(m_cmdConfigList[m_runStep].m_time) != 0)
                         {
-                            progressBarMain.Value = Convert.ToInt32(Convert.ToDouble(curTime) / Convert.ToDouble(allTime) * 100.0);
+                            progressBarMain.Value = Convert.ToInt32(curTime / allTime * 100.0);
                         }
 
                         return;
@@ -176,6 +184,24 @@ namespace MKB
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
+        /// 单步 按钮事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void buttonSingleStep_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// 运行 按钮事件
         /// </summary>
         /// <param name="sender"></param>
@@ -185,7 +211,7 @@ namespace MKB
             try
             {
                 // 过期保护
-                if (IsOutOfDate())
+                if (m_isOutOfDate)
                 {
                     return;
                 }
@@ -289,7 +315,6 @@ namespace MKB
                         dataGridViewCmdConfigList.CurrentCell = dataGridViewCmdConfigList.Rows[curRow + 1].Cells[dataGridViewCmdConfigList.CurrentCell.ColumnIndex];
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -582,7 +607,12 @@ namespace MKB
         {
             try
             {
-                
+                // 弹出命令配置窗口
+                InputRegCodeForm inputRegCodeForm = new InputRegCodeForm();
+                if (inputRegCodeForm.ShowDialog(this) == DialogResult.OK)
+                {
+                    
+                }
             }
             catch (Exception ex)
             {
@@ -599,7 +629,12 @@ namespace MKB
         {
             try
             {
-                
+                // 弹出命令配置窗口
+                RegisterForm registerForm = new RegisterForm();
+                if (registerForm.ShowDialog(this) == DialogResult.OK)
+                {
+                    
+                }
             }
             catch (Exception ex)
             {
@@ -622,6 +657,16 @@ namespace MKB
                 str += "Author: ZpRoc\n";
                 str += "Date: " + dateVersion + "\n";
                 str += "Version: " + pushVersion + "\n";
+
+                string overtime = GetOverTime();
+                if (!string.IsNullOrWhiteSpace(GetOverTime()))
+                {
+                    str += "OverTime: " + GetOverTime() + "\n";
+                }
+                else
+                {
+                    str += "OverTime: No access\n";
+                }
 
                 MessageBox.Show(str);
             }
@@ -917,21 +962,58 @@ namespace MKB
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
+        /// 获取过期时间
+        /// </summary>
+        /// <returns></returns>
+        public string GetOverTime()
+        {
+            // 根据注册码，获取时间
+            string keyUrl = @"key.txt";
+            if (File.Exists(keyUrl))
+            {
+                SecretKey sk = new SecretKey();
+                return sk.Decrypt(Encryption.MachineCode.GetMachineCode(), File.ReadAllText(keyUrl));
+            }
+            else
+            {
+                //MessageBox.Show("注册码文件 (key.txt) 不存在，应放置于可执行文件同级目录下！");
+                return null;
+            }
+        }
+
+        /// <summary>
         /// 判断是否过期
         /// </summary>
         /// <returns></returns>
         public bool IsOutOfDate()
         {
-            int resDays = (Convert.ToDateTime("2021/3/30 23:59:59") - DateTime.Now).Days;
+            try
+            {
+                string overtime = GetOverTime();
 
-            if (resDays > 0)
-            {
-                //MessageBox.Show(string.Format("试用期还剩 {0} 天！", resDays));
-                return (false);
+                if (!string.IsNullOrWhiteSpace(overtime))
+                {
+                    DateTime dt = DateTime.ParseExact(overtime, "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
+                    if (dt > DateTime.Now)
+                    {
+                        //MessageBox.Show(string.Format("试用期还剩 {0} 天！", resDays));
+                        return (false);
+                    }
+                    else
+                    {
+                        MessageBox.Show("试用期已过，请联系码农！");
+                        return (true);
+                    }
+                }
+                else
+                {
+                    //MessageBox.Show("注册码有误，请联系码农！");
+                    return (true);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("试用期已过，请联系码农！");
+                MessageBox.Show("注册码有误，请联系码农！");
                 return (true);
             }
         }

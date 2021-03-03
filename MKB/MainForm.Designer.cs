@@ -72,9 +72,10 @@
             this.toolStripMenuItemActive = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemMachineCode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemSetRegCode = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemGetRegCode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemGetRegCode = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonSingleStep = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCmdConfigList)).BeginInit();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
@@ -82,7 +83,7 @@
             // buttonNew
             // 
             this.buttonNew.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonNew.Location = new System.Drawing.Point(971, 138);
+            this.buttonNew.Location = new System.Drawing.Point(971, 183);
             this.buttonNew.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonNew.Name = "buttonNew";
             this.buttonNew.Size = new System.Drawing.Size(80, 36);
@@ -94,7 +95,7 @@
             // buttonEdit
             // 
             this.buttonEdit.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonEdit.Location = new System.Drawing.Point(971, 194);
+            this.buttonEdit.Location = new System.Drawing.Point(971, 233);
             this.buttonEdit.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonEdit.Name = "buttonEdit";
             this.buttonEdit.Size = new System.Drawing.Size(80, 36);
@@ -106,7 +107,7 @@
             // buttonMoveUp
             // 
             this.buttonMoveUp.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonMoveUp.Location = new System.Drawing.Point(971, 250);
+            this.buttonMoveUp.Location = new System.Drawing.Point(971, 282);
             this.buttonMoveUp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonMoveUp.Name = "buttonMoveUp";
             this.buttonMoveUp.Size = new System.Drawing.Size(80, 36);
@@ -118,7 +119,7 @@
             // buttonMoveDown
             // 
             this.buttonMoveDown.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonMoveDown.Location = new System.Drawing.Point(971, 306);
+            this.buttonMoveDown.Location = new System.Drawing.Point(971, 332);
             this.buttonMoveDown.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonMoveDown.Name = "buttonMoveDown";
             this.buttonMoveDown.Size = new System.Drawing.Size(80, 36);
@@ -130,7 +131,7 @@
             // buttonDel
             // 
             this.buttonDel.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonDel.Location = new System.Drawing.Point(971, 362);
+            this.buttonDel.Location = new System.Drawing.Point(971, 381);
             this.buttonDel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonDel.Name = "buttonDel";
             this.buttonDel.Size = new System.Drawing.Size(80, 36);
@@ -142,7 +143,7 @@
             // buttonExport
             // 
             this.buttonExport.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonExport.Location = new System.Drawing.Point(971, 418);
+            this.buttonExport.Location = new System.Drawing.Point(971, 431);
             this.buttonExport.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonExport.Name = "buttonExport";
             this.buttonExport.Size = new System.Drawing.Size(80, 36);
@@ -154,7 +155,7 @@
             // buttonImport
             // 
             this.buttonImport.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonImport.Location = new System.Drawing.Point(971, 474);
+            this.buttonImport.Location = new System.Drawing.Point(971, 480);
             this.buttonImport.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonImport.Name = "buttonImport";
             this.buttonImport.Size = new System.Drawing.Size(80, 36);
@@ -313,7 +314,7 @@
             // buttonRun
             // 
             this.buttonRun.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonRun.Location = new System.Drawing.Point(971, 82);
+            this.buttonRun.Location = new System.Drawing.Point(971, 133);
             this.buttonRun.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.buttonRun.Name = "buttonRun";
             this.buttonRun.Size = new System.Drawing.Size(80, 36);
@@ -412,6 +413,13 @@
             this.toolStripMenuItemSetRegCode.Text = "载入注册码";
             this.toolStripMenuItemSetRegCode.Click += new System.EventHandler(this.toolStripMenuItemSetRegCode_Click);
             // 
+            // toolStripMenuItemGetRegCode
+            // 
+            this.toolStripMenuItemGetRegCode.Name = "toolStripMenuItemGetRegCode";
+            this.toolStripMenuItemGetRegCode.Size = new System.Drawing.Size(180, 26);
+            this.toolStripMenuItemGetRegCode.Text = "获取注册码";
+            this.toolStripMenuItemGetRegCode.Click += new System.EventHandler(this.toolStripMenuItemGetRegCode_Click);
+            // 
             // toolStripMenuItemHelp
             // 
             this.toolStripMenuItemHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -427,18 +435,25 @@
             this.toolStripMenuItemAbout.Text = "关于";
             this.toolStripMenuItemAbout.Click += new System.EventHandler(this.toolStripMenuItemAbout_Click);
             // 
-            // toolStripMenuItemGetRegCode
+            // buttonSingleStep
             // 
-            this.toolStripMenuItemGetRegCode.Name = "toolStripMenuItemGetRegCode";
-            this.toolStripMenuItemGetRegCode.Size = new System.Drawing.Size(180, 26);
-            this.toolStripMenuItemGetRegCode.Text = "获取注册码";
-            this.toolStripMenuItemGetRegCode.Click += new System.EventHandler(this.toolStripMenuItemGetRegCode_Click);
+            this.buttonSingleStep.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.buttonSingleStep.Location = new System.Drawing.Point(971, 82);
+            this.buttonSingleStep.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.buttonSingleStep.Name = "buttonSingleStep";
+            this.buttonSingleStep.Size = new System.Drawing.Size(80, 36);
+            this.buttonSingleStep.TabIndex = 16;
+            this.buttonSingleStep.Tag = "";
+            this.buttonSingleStep.Text = "单步";
+            this.buttonSingleStep.UseVisualStyleBackColor = true;
+            this.buttonSingleStep.Click += new System.EventHandler(this.buttonSingleStep_Click);
             // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1064, 581);
+            this.Controls.Add(this.buttonSingleStep);
             this.Controls.Add(this.checkBoxHide);
             this.Controls.Add(this.progressBarMain);
             this.Controls.Add(this.buttonRun);
@@ -506,6 +521,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSetRegCode;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAbout;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemGetRegCode;
+        private System.Windows.Forms.Button buttonSingleStep;
     }
 }
 

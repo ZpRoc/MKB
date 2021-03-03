@@ -95,7 +95,7 @@
             // 
             this.labelTitle.AutoSize = true;
             this.labelTitle.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelTitle.Location = new System.Drawing.Point(78, 15);
+            this.labelTitle.Location = new System.Drawing.Point(106, 15);
             this.labelTitle.Name = "labelTitle";
             this.labelTitle.Size = new System.Drawing.Size(170, 31);
             this.labelTitle.TabIndex = 101;
@@ -254,7 +254,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "CmdConfigForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CmdConfigForm";
+            this.Text = "命令配置窗口";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CmdConfigForm_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();

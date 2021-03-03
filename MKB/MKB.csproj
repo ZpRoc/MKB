@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Encryption\SecretKey.cs" />
     <Compile Include="SubForm\CmdConfig.cs" />
     <Compile Include="SubForm\CmdConfigForm.cs">
       <SubType>Form</SubType>
@@ -83,6 +84,18 @@
     <Compile Include="CtrlClass\MouseControl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SubForm\InputRegCodeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\InputRegCodeForm.Designer.cs">
+      <DependentUpon>InputRegCodeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SubForm\RegisterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SubForm\RegisterForm.Designer.cs">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="SubForm\CmdConfigForm.resx">
       <DependentUpon>CmdConfigForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -98,6 +111,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SubForm\InputRegCodeForm.resx">
+      <DependentUpon>InputRegCodeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SubForm\RegisterForm.resx">
+      <DependentUpon>RegisterForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
