@@ -22,10 +22,11 @@ namespace MKB
     public partial class MainForm : Form
     {
         // 版本
-        string dateVersion = "20210303";
-        string pushVersion = "V1.2.0";
+        string m_dateVersion = "20210303";
+        string m_pushVersion = "V1.2.1";
 
         // 是否过期
+        string m_overtime  = string.Empty;
         bool m_isOutOfDate = true;
 
         // 鼠标键盘控制类
@@ -42,7 +43,8 @@ namespace MKB
         {
             InitializeComponent();
 
-            m_isOutOfDate = IsOutOfDate();
+            m_overtime    = GetOverTime();
+            m_isOutOfDate = IsOutOfDate(m_overtime);
 
         }
 
@@ -611,7 +613,7 @@ namespace MKB
                 InputRegCodeForm inputRegCodeForm = new InputRegCodeForm();
                 if (inputRegCodeForm.ShowDialog(this) == DialogResult.OK)
                 {
-                    
+                    MessageBox.Show("注册码写入完毕，请重启软件！");
                 }
             }
             catch (Exception ex)
@@ -655,17 +657,16 @@ namespace MKB
 
                 str += "鼠标键盘自动控制插件\n";
                 str += "Author: ZpRoc\n";
-                str += "Date: " + dateVersion + "\n";
-                str += "Version: " + pushVersion + "\n";
+                str += "Date: " + m_dateVersion + "\n";
+                str += "Version: " + m_pushVersion + "\n";
 
-                string overtime = GetOverTime();
-                if (!string.IsNullOrWhiteSpace(GetOverTime()))
+                if (!m_isOutOfDate)
                 {
-                    str += "OverTime: " + GetOverTime() + "\n";
+                    str += "Authority: " + m_overtime + "\n";
                 }
                 else
                 {
-                    str += "OverTime: No access\n";
+                    str += "Authority: No access\n";
                 }
 
                 MessageBox.Show(str);
@@ -985,12 +986,10 @@ namespace MKB
         /// 判断是否过期
         /// </summary>
         /// <returns></returns>
-        public bool IsOutOfDate()
+        public bool IsOutOfDate(string overtime)
         {
             try
             {
-                string overtime = GetOverTime();
-
                 if (!string.IsNullOrWhiteSpace(overtime))
                 {
                     DateTime dt = DateTime.ParseExact(overtime, "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
@@ -1001,7 +1000,7 @@ namespace MKB
                     }
                     else
                     {
-                        MessageBox.Show("试用期已过，请联系码农！");
+                        //MessageBox.Show("试用期已过，请联系码农！");
                         return (true);
                     }
                 }
