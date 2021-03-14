@@ -22,8 +22,8 @@ namespace MKB
     public partial class MainForm : Form
     {
         // 版本
-        string m_dateVersion = "20210303";
-        string m_pushVersion = "V1.2.1";
+        string m_dateVersion = "20210314";
+        string m_pushVersion = "V1.2.2";
 
         // 是否过期
         string m_overtime  = string.Empty;
@@ -653,23 +653,23 @@ namespace MKB
         {
             try
             {
-                string str = string.Empty;
-
-                str += "鼠标键盘自动控制插件\n";
-                str += "Author: ZpRoc\n";
-                str += "Date: " + m_dateVersion + "\n";
-                str += "Version: " + m_pushVersion + "\n";
+                string authority = string.Empty;
 
                 if (!m_isOutOfDate)
                 {
-                    str += "Authority: " + m_overtime + "\n";
+                    authority = m_overtime;
                 }
                 else
                 {
-                    str += "Authority: No access\n";
+                    authority = "No access";
                 }
 
-                MessageBox.Show(str);
+                // 弹出命令配置窗口
+                AboutForm aboutForm = new AboutForm(m_dateVersion, m_pushVersion, authority);
+                if (aboutForm.ShowDialog(this) == DialogResult.OK)
+                {
+                    
+                }
             }
             catch (Exception ex)
             {
