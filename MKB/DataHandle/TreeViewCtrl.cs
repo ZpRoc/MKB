@@ -34,15 +34,18 @@ namespace MKB.DataHandle
         public string CreateCmd(TreeView treeView, CmdConfig cmdConfig)
         {
             // 添加 CmdNode 的时候，必须选中某一个 GrpNode
-            if ((treeView.SelectedNode == null) || (treeView.SelectedNode != null && treeView.SelectedNode.Level != 1))
-                return "仅允许在命令组下添加命令，请选中命令组节点后再添加！";
+            if (treeView.SelectedNode == null)
+                return "仅允许在命令组下添加命令，请选中命令组节点或命令节点后再添加！";
 
             // 创建新节点，并添加
             TreeNode treeNode = new TreeNode();
             treeNode.Text     = "C00 " + cmdConfig.m_descr;
             treeNode.Tag      = cmdConfig;
 
-            treeView.SelectedNode.Parent.Nodes.Insert(treeView.SelectedNode.Index + 1, treeNode);
+            if (treeView.SelectedNode.Level == 1)
+                treeView.SelectedNode.Parent.Nodes.Insert(treeView.SelectedNode.Index + 1, treeNode);
+            else if (treeView.SelectedNode.Level == 0)
+                treeView.SelectedNode.Nodes.Add(treeNode);
 
             // 将新节点设置为选中状态
             treeView.SelectedNode = treeNode;

@@ -88,8 +88,21 @@
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.buttonNewGroup = new System.Windows.Forms.Button();
             this.buttonNewCmd = new System.Windows.Forms.Button();
+            this.contextMenuStripMain = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemMoveUp = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemMoveDn = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemDel = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRunStep = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRunHere = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRun = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCmdConfigList)).BeginInit();
             this.menuStripMain.SuspendLayout();
+            this.contextMenuStripMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonNew
@@ -383,21 +396,21 @@
             // toolStripMenuItemImport
             // 
             this.toolStripMenuItemImport.Name = "toolStripMenuItemImport";
-            this.toolStripMenuItemImport.Size = new System.Drawing.Size(116, 26);
+            this.toolStripMenuItemImport.Size = new System.Drawing.Size(180, 26);
             this.toolStripMenuItemImport.Text = "导入";
             this.toolStripMenuItemImport.Click += new System.EventHandler(this.toolStripMenuItemImport_Click);
             // 
             // toolStripMenuItemExport
             // 
             this.toolStripMenuItemExport.Name = "toolStripMenuItemExport";
-            this.toolStripMenuItemExport.Size = new System.Drawing.Size(116, 26);
+            this.toolStripMenuItemExport.Size = new System.Drawing.Size(180, 26);
             this.toolStripMenuItemExport.Text = "导出";
             this.toolStripMenuItemExport.Click += new System.EventHandler(this.toolStripMenuItemExport_Click);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(116, 26);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(180, 26);
             this.toolStripMenuItemExit.Text = "退出";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
             // 
@@ -414,21 +427,21 @@
             // toolStripMenuItemMachineCode
             // 
             this.toolStripMenuItemMachineCode.Name = "toolStripMenuItemMachineCode";
-            this.toolStripMenuItemMachineCode.Size = new System.Drawing.Size(170, 26);
+            this.toolStripMenuItemMachineCode.Size = new System.Drawing.Size(180, 26);
             this.toolStripMenuItemMachineCode.Text = "获取机器码";
             this.toolStripMenuItemMachineCode.Click += new System.EventHandler(this.toolStripMenuItemMachineCode_Click);
             // 
             // toolStripMenuItemSetRegCode
             // 
             this.toolStripMenuItemSetRegCode.Name = "toolStripMenuItemSetRegCode";
-            this.toolStripMenuItemSetRegCode.Size = new System.Drawing.Size(170, 26);
+            this.toolStripMenuItemSetRegCode.Size = new System.Drawing.Size(180, 26);
             this.toolStripMenuItemSetRegCode.Text = "载入注册码";
             this.toolStripMenuItemSetRegCode.Click += new System.EventHandler(this.toolStripMenuItemSetRegCode_Click);
             // 
             // toolStripMenuItemGetRegCode
             // 
             this.toolStripMenuItemGetRegCode.Name = "toolStripMenuItemGetRegCode";
-            this.toolStripMenuItemGetRegCode.Size = new System.Drawing.Size(170, 26);
+            this.toolStripMenuItemGetRegCode.Size = new System.Drawing.Size(180, 26);
             this.toolStripMenuItemGetRegCode.Text = "获取注册码";
             this.toolStripMenuItemGetRegCode.Click += new System.EventHandler(this.toolStripMenuItemGetRegCode_Click);
             // 
@@ -473,6 +486,7 @@
             treeNode3.Text = "C02 ";
             treeNode4.Name = "G00 ";
             treeNode4.Text = "G00 ";
+            treeNode5.ContextMenuStrip = this.contextMenuStripMain;
             treeNode5.Name = "G01 ";
             treeNode5.Text = "G01 ";
             treeNode6.Name = "G02 ";
@@ -510,6 +524,95 @@
             this.buttonNewCmd.UseVisualStyleBackColor = true;
             this.buttonNewCmd.Click += new System.EventHandler(this.buttonNewCmd_Click);
             // 
+            // contextMenuStripMain
+            // 
+            this.contextMenuStripMain.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 12F);
+            this.contextMenuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemNew,
+            this.toolStripSeparator1,
+            this.toolStripMenuItemEdit,
+            this.toolStripMenuItemDel,
+            this.toolStripSeparator2,
+            this.toolStripMenuItemMoveUp,
+            this.toolStripMenuItemMoveDn,
+            this.toolStripSeparator3,
+            this.toolStripMenuItemRun,
+            this.toolStripMenuItemRunHere,
+            this.toolStripMenuItemRunStep});
+            this.contextMenuStripMain.Name = "contextMenuStripMain";
+            this.contextMenuStripMain.Size = new System.Drawing.Size(207, 252);
+            // 
+            // toolStripMenuItemNew
+            // 
+            this.toolStripMenuItemNew.Name = "toolStripMenuItemNew";
+            this.toolStripMenuItemNew.Size = new System.Drawing.Size(206, 26);
+            this.toolStripMenuItemNew.Text = "新建 (N/A/B)";
+            this.toolStripMenuItemNew.Click += new System.EventHandler(this.toolStripMenuItemNew_Click);
+            // 
+            // toolStripMenuItemMoveUp
+            // 
+            this.toolStripMenuItemMoveUp.Name = "toolStripMenuItemMoveUp";
+            this.toolStripMenuItemMoveUp.Size = new System.Drawing.Size(206, 26);
+            this.toolStripMenuItemMoveUp.Text = "上移 (Up)";
+            this.toolStripMenuItemMoveUp.Click += new System.EventHandler(this.toolStripMenuItemMoveUp_Click);
+            // 
+            // toolStripMenuItemMoveDn
+            // 
+            this.toolStripMenuItemMoveDn.Name = "toolStripMenuItemMoveDn";
+            this.toolStripMenuItemMoveDn.Size = new System.Drawing.Size(206, 26);
+            this.toolStripMenuItemMoveDn.Text = "下移 (Dn)";
+            this.toolStripMenuItemMoveDn.Click += new System.EventHandler(this.toolStripMenuItemMoveDn_Click);
+            // 
+            // toolStripMenuItemEdit
+            // 
+            this.toolStripMenuItemEdit.Name = "toolStripMenuItemEdit";
+            this.toolStripMenuItemEdit.Size = new System.Drawing.Size(206, 26);
+            this.toolStripMenuItemEdit.Text = "编辑 (D-Click)";
+            this.toolStripMenuItemEdit.Click += new System.EventHandler(this.toolStripMenuItemEdit_Click);
+            // 
+            // toolStripMenuItemDel
+            // 
+            this.toolStripMenuItemDel.Name = "toolStripMenuItemDel";
+            this.toolStripMenuItemDel.Size = new System.Drawing.Size(206, 26);
+            this.toolStripMenuItemDel.Text = "删除 (Delete)";
+            this.toolStripMenuItemDel.Click += new System.EventHandler(this.toolStripMenuItemDel_Click);
+            // 
+            // toolStripMenuItemRunStep
+            // 
+            this.toolStripMenuItemRunStep.Name = "toolStripMenuItemRunStep";
+            this.toolStripMenuItemRunStep.Size = new System.Drawing.Size(206, 26);
+            this.toolStripMenuItemRunStep.Text = "单步运行 (F10)";
+            this.toolStripMenuItemRunStep.Click += new System.EventHandler(this.toolStripMenuItemRunStep_Click);
+            // 
+            // toolStripMenuItemRunHere
+            // 
+            this.toolStripMenuItemRunHere.Name = "toolStripMenuItemRunHere";
+            this.toolStripMenuItemRunHere.Size = new System.Drawing.Size(206, 26);
+            this.toolStripMenuItemRunHere.Text = "从这运行 (F6)";
+            this.toolStripMenuItemRunHere.Click += new System.EventHandler(this.toolStripMenuItemRunHere_Click);
+            // 
+            // toolStripMenuItemRun
+            // 
+            this.toolStripMenuItemRun.Name = "toolStripMenuItemRun";
+            this.toolStripMenuItemRun.Size = new System.Drawing.Size(206, 26);
+            this.toolStripMenuItemRun.Text = "从头运行 (F5)";
+            this.toolStripMenuItemRun.Click += new System.EventHandler(this.toolStripMenuItemRun_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(203, 6);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(203, 6);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(203, 6);
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -546,6 +649,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCmdConfigList)).EndInit();
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
+            this.contextMenuStripMain.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -590,6 +694,18 @@
         private System.Windows.Forms.TreeView treeViewMain;
         private System.Windows.Forms.Button buttonNewGroup;
         private System.Windows.Forms.Button buttonNewCmd;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStripMain;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemNew;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemMoveUp;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemMoveDn;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemEdit;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemDel;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRun;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRunHere;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRunStep;
     }
 }
 
