@@ -347,9 +347,9 @@ namespace MKB.SubForm
         /// <returns></returns>
         public CmdConfig GetComponent()
         {
-            return(new CmdConfig(comboBoxType.SelectedItem.ToString(), textBoxPosX.Text.ToString(), textBoxPosY.Text.ToString(), 
+            return new CmdConfig(comboBoxType.SelectedItem.ToString(), textBoxPosX.Text.ToString(), textBoxPosY.Text.ToString(), 
                                  comboBoxOp.SelectedItem.ToString(), textBoxOp.Text.ToString(), textBoxDelay.Text.ToString(), 
-                                 comboBoxDelay.SelectedItem.ToString(), textBoxDescr.Text.ToString()));
+                                 comboBoxDelay.SelectedItem.ToString(), textBoxDescr.Text.ToString());
         }
 
         

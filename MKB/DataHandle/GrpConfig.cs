@@ -18,22 +18,17 @@ namespace MKB.DataHandle
     /// </summary>
     public class GrpConfig
     {
-        public string m_name = string.Empty;
+        public string m_descr = string.Empty;
         public int m_times   = 1;
 
         public GrpConfig()
         {
         }
 
-        public GrpConfig(string name)
+        public GrpConfig(int times, string descr)
         {
-            m_name = name;
-        }
-
-        public GrpConfig(string name, int times)
-        {
-            m_name  = name;
             m_times = times;
+            m_descr = descr;
         }
 
         // -------------------------------------------------------------------------------- //

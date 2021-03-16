@@ -33,10 +33,6 @@ namespace MKB.DataHandle
         /// <returns></returns>
         public string CreateCmd(TreeView treeView, CmdConfig cmdConfig)
         {
-            // 添加 CmdNode 的时候，必须选中某一个 GrpNode
-            if (treeView.SelectedNode == null)
-                return "仅允许在命令组下添加命令，请选中命令组节点或命令节点后再添加！";
-
             // 创建新节点，并添加
             TreeNode treeNode = new TreeNode();
             treeNode.Text     = "C00 " + cmdConfig.m_descr;
@@ -63,13 +59,9 @@ namespace MKB.DataHandle
         /// <returns></returns>
         public string CreateGrp(TreeView treeView, GrpConfig grpConfig)
         {
-            // 添加 GrpNode 的时候，必须处于根目录状态
-            if (treeView.SelectedNode != null && treeView.SelectedNode.Level != 0)
-                return "仅允许在根目录下添加命令组，请选中根目录节点后再添加！";
-
             // 创建新节点，并添加
             TreeNode treeNode = new TreeNode();
-            treeNode.Text     = "G00 " + grpConfig.m_name;
+            treeNode.Text     = "G00 " + grpConfig.m_descr;
             treeNode.Tag      = grpConfig;
 
             if (treeView.SelectedNode != null)
@@ -85,51 +77,116 @@ namespace MKB.DataHandle
             return null;
         }
 
+        /// <summary>
+        /// 编辑新命令节点
+        /// </summary>
+        /// <param name="treeView"></param>
+        /// <param name="cmdConfig">命令 数据</param>
+        /// <returns></returns>
+        public string EditCmd(TreeView treeView, CmdConfig cmdConfig)
+        {
+            // 编辑节点
+            treeView.SelectedNode.Text = treeView.SelectedNode.Text.Substring(0, 4) + cmdConfig.m_descr;
+            treeView.SelectedNode.Tag  = cmdConfig;
+
+            // 返回
+            return null;
+        }
+
+        /// <summary>
+        /// 编辑新命令组节点
+        /// </summary>
+        /// <param name="treeView"></param>
+        /// <param name="grpConfig">命令组 数据</param>
+        /// <returns></returns>
+        public string EditGrp(TreeView treeView, GrpConfig grpConfig)
+        {
+            // 编辑节点
+            treeView.SelectedNode.Text = treeView.SelectedNode.Text.Substring(0, 4) + grpConfig.m_descr;
+            treeView.SelectedNode.Tag = grpConfig;
+
+            // 返回
+            return null;
+        }
+
+        /// <summary>
+        /// 删除 命令/命令组 节点
+        /// </summary>
+        /// <param name="treeView"></param>
+        /// <returns></returns>
+        public string DeleteNode(TreeView treeView)
+        {
+            // 删除节点
+            treeView.SelectedNode.Remove();
+
+            // 刷新节点文本，并返回
+            RefreshText(treeView);
+            return null;
+        }
+
+        /// <summary>
+        /// 上移 命令/命令组 节点
+        /// </summary>
+        /// <param name="treeView"></param>
+        /// <returns></returns>
+        public string MoveUpNode(TreeView treeView)
+        {
+            // 指定节点为空，或者指定节点处于首位
+            if (treeView.SelectedNode == null || treeView.SelectedNode.PrevNode == null)
+                return null;
+
+            // 克隆该节点，并删除
+            int prevIndex = treeView.SelectedNode.PrevNode.Index;
+            TreeNode newNode = (TreeNode)treeView.SelectedNode.Clone();
+            treeView.SelectedNode.TreeView.Nodes.Remove(treeView.SelectedNode);
+
+            // 节点移动
+            if (treeView.SelectedNode.Parent != null)
+                treeView.SelectedNode.Parent.Nodes.Insert(prevIndex, newNode);
+            else
+                treeView.SelectedNode.TreeView.Nodes.Insert(prevIndex, newNode);
+
+            // 将移动后节点设置为选中状态
+            treeView.SelectedNode.TreeView.SelectedNode = newNode;
+
+            // 刷新节点文本，并返回
+            RefreshText(treeView);
+            return null;
+        }
+
+        /// <summary>
+        /// 下移 命令/命令组 节点
+        /// </summary>
+        /// <param name="treeView"></param>
+        /// <returns></returns>
+        public string MoveDnNode(TreeView treeView)
+        {
+            // 指定节点为空，或者指定节点处于末位
+            if (treeView.SelectedNode == null || treeView.SelectedNode.NextNode == null)
+                return null;
+
+            // 克隆该节点，并删除
+            int nextIndex = treeView.SelectedNode.NextNode.Index;
+            TreeNode newNode = (TreeNode)treeView.SelectedNode.Clone();
+            treeView.SelectedNode.TreeView.Nodes.Remove(treeView.SelectedNode);
+
+            // 节点移动
+            if (treeView.SelectedNode.Parent != null)
+                treeView.SelectedNode.Parent.Nodes.Insert(nextIndex, newNode);
+            else
+                treeView.SelectedNode.TreeView.Nodes.Insert(nextIndex, newNode);
+
+            // 将移动后节点设置为选中状态
+            treeView.SelectedNode.TreeView.SelectedNode = newNode;
+
+            // 刷新节点文本，并返回
+            RefreshText(treeView);
+            return null;
+        }
+
         // -------------------------------------------------------------------------------- //
         // ---------------------------------- Functions ----------------------------------- //
         // -------------------------------------------------------------------------------- //
-
-        public string NodeUp(TreeNode node)
-        {
-            // 指定节点为空，或者指定节点处于首位
-            if (node == null || node.PrevNode == null)
-                return null;
-
-            // 克隆该节点
-            TreeNode newNode = (TreeNode)node.Clone();
-
-            // 节点移动
-            if (node.Parent != null)
-                node.Parent.Nodes.Insert(node.PrevNode.Index, newNode);
-            else
-                node.TreeView.Nodes.Insert(node.PrevNode.Index, newNode);
-
-            node.TreeView.SelectedNode = newNode;
-            node.TreeView.Nodes.Remove(node);
-
-            return null;
-        }
-
-        public string NodeDown(TreeNode node)
-        {
-            // 指定节点为空，或者指定节点处于末位
-            if (node == null || node.NextNode == null)
-                return null;
-
-            // 克隆该节点
-            TreeNode newNode = (TreeNode)node.Clone();
-
-            // 节点移动
-            if (node.Parent != null)
-                node.Parent.Nodes.Add(newNode);
-            else
-                node.TreeView.Nodes.Add(newNode);
-
-            node.TreeView.SelectedNode = newNode;
-            node.TreeView.Nodes.Remove(node);
-
-            return null;
-        }
 
         /// <summary>
         /// 改变节点编号

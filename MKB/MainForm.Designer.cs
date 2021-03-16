@@ -41,16 +41,20 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("C00 ");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("C01 ");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("C02 ");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("G00 ", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("G01 ");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("G02 ");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            this.contextMenuStripMain = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemNewCmd = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemNewGrp = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemDel = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemMoveUp = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemMoveDn = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItemRun = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRunHere = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRunStep = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonNew = new System.Windows.Forms.Button();
             this.buttonEdit = new System.Windows.Forms.Button();
             this.buttonMoveUp = new System.Windows.Forms.Button();
@@ -86,24 +90,107 @@
             this.toolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonSingleStep = new System.Windows.Forms.Button();
             this.treeViewMain = new System.Windows.Forms.TreeView();
-            this.buttonNewGroup = new System.Windows.Forms.Button();
-            this.buttonNewCmd = new System.Windows.Forms.Button();
-            this.contextMenuStripMain = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItemNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemMoveUp = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemMoveDn = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemDel = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemRunStep = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemRunHere = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemRun = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.contextMenuStripMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCmdConfigList)).BeginInit();
             this.menuStripMain.SuspendLayout();
-            this.contextMenuStripMain.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // contextMenuStripMain
+            // 
+            this.contextMenuStripMain.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 12F);
+            this.contextMenuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemNewCmd,
+            this.toolStripMenuItemNewGrp,
+            this.toolStripSeparator1,
+            this.toolStripMenuItemEdit,
+            this.toolStripMenuItemDel,
+            this.toolStripSeparator2,
+            this.toolStripMenuItemMoveUp,
+            this.toolStripMenuItemMoveDn,
+            this.toolStripSeparator3,
+            this.toolStripMenuItemRun,
+            this.toolStripMenuItemRunHere,
+            this.toolStripMenuItemRunStep});
+            this.contextMenuStripMain.Name = "contextMenuStripMain";
+            this.contextMenuStripMain.Size = new System.Drawing.Size(216, 256);
+            // 
+            // toolStripMenuItemNewCmd
+            // 
+            this.toolStripMenuItemNewCmd.Name = "toolStripMenuItemNewCmd";
+            this.toolStripMenuItemNewCmd.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemNewCmd.Text = "新命令 (Ctrl+N)";
+            this.toolStripMenuItemNewCmd.Click += new System.EventHandler(this.toolStripMenuItemNewCmd_Click);
+            // 
+            // toolStripMenuItemNewGrp
+            // 
+            this.toolStripMenuItemNewGrp.Name = "toolStripMenuItemNewGrp";
+            this.toolStripMenuItemNewGrp.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemNewGrp.Text = "新建组 (Alt+N)";
+            this.toolStripMenuItemNewGrp.Click += new System.EventHandler(this.toolStripMenuItemNewGrp_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(212, 6);
+            // 
+            // toolStripMenuItemEdit
+            // 
+            this.toolStripMenuItemEdit.Name = "toolStripMenuItemEdit";
+            this.toolStripMenuItemEdit.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemEdit.Text = "编辑 (Ctrl+E)";
+            this.toolStripMenuItemEdit.Click += new System.EventHandler(this.toolStripMenuItemEdit_Click);
+            // 
+            // toolStripMenuItemDel
+            // 
+            this.toolStripMenuItemDel.Name = "toolStripMenuItemDel";
+            this.toolStripMenuItemDel.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemDel.Text = "删除 (Delete)";
+            this.toolStripMenuItemDel.Click += new System.EventHandler(this.toolStripMenuItemDel_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(212, 6);
+            // 
+            // toolStripMenuItemMoveUp
+            // 
+            this.toolStripMenuItemMoveUp.Name = "toolStripMenuItemMoveUp";
+            this.toolStripMenuItemMoveUp.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemMoveUp.Text = "上移 (Ctrl+Up)";
+            this.toolStripMenuItemMoveUp.Click += new System.EventHandler(this.toolStripMenuItemMoveUp_Click);
+            // 
+            // toolStripMenuItemMoveDn
+            // 
+            this.toolStripMenuItemMoveDn.Name = "toolStripMenuItemMoveDn";
+            this.toolStripMenuItemMoveDn.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemMoveDn.Text = "下移 (Ctrl+Dn)";
+            this.toolStripMenuItemMoveDn.Click += new System.EventHandler(this.toolStripMenuItemMoveDn_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(212, 6);
+            // 
+            // toolStripMenuItemRun
+            // 
+            this.toolStripMenuItemRun.Name = "toolStripMenuItemRun";
+            this.toolStripMenuItemRun.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemRun.Text = "从头运行 (F5)";
+            this.toolStripMenuItemRun.Click += new System.EventHandler(this.toolStripMenuItemRun_Click);
+            // 
+            // toolStripMenuItemRunHere
+            // 
+            this.toolStripMenuItemRunHere.Name = "toolStripMenuItemRunHere";
+            this.toolStripMenuItemRunHere.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemRunHere.Text = "从这运行 (F6)";
+            this.toolStripMenuItemRunHere.Click += new System.EventHandler(this.toolStripMenuItemRunHere_Click);
+            // 
+            // toolStripMenuItemRunStep
+            // 
+            this.toolStripMenuItemRunStep.Name = "toolStripMenuItemRunStep";
+            this.toolStripMenuItemRunStep.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemRunStep.Text = "单步运行 (F10)";
+            this.toolStripMenuItemRunStep.Click += new System.EventHandler(this.toolStripMenuItemRunStep_Click);
             // 
             // buttonNew
             // 
@@ -396,21 +483,21 @@
             // toolStripMenuItemImport
             // 
             this.toolStripMenuItemImport.Name = "toolStripMenuItemImport";
-            this.toolStripMenuItemImport.Size = new System.Drawing.Size(180, 26);
+            this.toolStripMenuItemImport.Size = new System.Drawing.Size(116, 26);
             this.toolStripMenuItemImport.Text = "导入";
             this.toolStripMenuItemImport.Click += new System.EventHandler(this.toolStripMenuItemImport_Click);
             // 
             // toolStripMenuItemExport
             // 
             this.toolStripMenuItemExport.Name = "toolStripMenuItemExport";
-            this.toolStripMenuItemExport.Size = new System.Drawing.Size(180, 26);
+            this.toolStripMenuItemExport.Size = new System.Drawing.Size(116, 26);
             this.toolStripMenuItemExport.Text = "导出";
             this.toolStripMenuItemExport.Click += new System.EventHandler(this.toolStripMenuItemExport_Click);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(180, 26);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(116, 26);
             this.toolStripMenuItemExit.Text = "退出";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
             // 
@@ -427,21 +514,21 @@
             // toolStripMenuItemMachineCode
             // 
             this.toolStripMenuItemMachineCode.Name = "toolStripMenuItemMachineCode";
-            this.toolStripMenuItemMachineCode.Size = new System.Drawing.Size(180, 26);
+            this.toolStripMenuItemMachineCode.Size = new System.Drawing.Size(170, 26);
             this.toolStripMenuItemMachineCode.Text = "获取机器码";
             this.toolStripMenuItemMachineCode.Click += new System.EventHandler(this.toolStripMenuItemMachineCode_Click);
             // 
             // toolStripMenuItemSetRegCode
             // 
             this.toolStripMenuItemSetRegCode.Name = "toolStripMenuItemSetRegCode";
-            this.toolStripMenuItemSetRegCode.Size = new System.Drawing.Size(180, 26);
+            this.toolStripMenuItemSetRegCode.Size = new System.Drawing.Size(170, 26);
             this.toolStripMenuItemSetRegCode.Text = "载入注册码";
             this.toolStripMenuItemSetRegCode.Click += new System.EventHandler(this.toolStripMenuItemSetRegCode_Click);
             // 
             // toolStripMenuItemGetRegCode
             // 
             this.toolStripMenuItemGetRegCode.Name = "toolStripMenuItemGetRegCode";
-            this.toolStripMenuItemGetRegCode.Size = new System.Drawing.Size(180, 26);
+            this.toolStripMenuItemGetRegCode.Size = new System.Drawing.Size(170, 26);
             this.toolStripMenuItemGetRegCode.Text = "获取注册码";
             this.toolStripMenuItemGetRegCode.Click += new System.EventHandler(this.toolStripMenuItemGetRegCode_Click);
             // 
@@ -475,151 +562,19 @@
             // 
             // treeViewMain
             // 
+            this.treeViewMain.ContextMenuStrip = this.contextMenuStripMain;
             this.treeViewMain.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.treeViewMain.Location = new System.Drawing.Point(34, 122);
             this.treeViewMain.Name = "treeViewMain";
-            treeNode1.Name = "C00 ";
-            treeNode1.Text = "C00 ";
-            treeNode2.Name = "C01 ";
-            treeNode2.Text = "C01 ";
-            treeNode3.Name = "C02 ";
-            treeNode3.Text = "C02 ";
-            treeNode4.Name = "G00 ";
-            treeNode4.Text = "G00 ";
-            treeNode5.ContextMenuStrip = this.contextMenuStripMain;
-            treeNode5.Name = "G01 ";
-            treeNode5.Text = "G01 ";
-            treeNode6.Name = "G02 ";
-            treeNode6.Text = "G02 ";
-            this.treeViewMain.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5,
-            treeNode6});
             this.treeViewMain.Size = new System.Drawing.Size(447, 403);
             this.treeViewMain.TabIndex = 17;
-            // 
-            // buttonNewGroup
-            // 
-            this.buttonNewGroup.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonNewGroup.Location = new System.Drawing.Point(650, 165);
-            this.buttonNewGroup.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.buttonNewGroup.Name = "buttonNewGroup";
-            this.buttonNewGroup.Size = new System.Drawing.Size(100, 36);
-            this.buttonNewGroup.TabIndex = 18;
-            this.buttonNewGroup.Tag = "";
-            this.buttonNewGroup.Text = "新建组";
-            this.buttonNewGroup.UseVisualStyleBackColor = true;
-            this.buttonNewGroup.Click += new System.EventHandler(this.buttonNewGroup_Click);
-            // 
-            // buttonNewCmd
-            // 
-            this.buttonNewCmd.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonNewCmd.Location = new System.Drawing.Point(650, 122);
-            this.buttonNewCmd.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.buttonNewCmd.Name = "buttonNewCmd";
-            this.buttonNewCmd.Size = new System.Drawing.Size(100, 36);
-            this.buttonNewCmd.TabIndex = 19;
-            this.buttonNewCmd.Tag = "";
-            this.buttonNewCmd.Text = "新建命令";
-            this.buttonNewCmd.UseVisualStyleBackColor = true;
-            this.buttonNewCmd.Click += new System.EventHandler(this.buttonNewCmd_Click);
-            // 
-            // contextMenuStripMain
-            // 
-            this.contextMenuStripMain.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 12F);
-            this.contextMenuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemNew,
-            this.toolStripSeparator1,
-            this.toolStripMenuItemEdit,
-            this.toolStripMenuItemDel,
-            this.toolStripSeparator2,
-            this.toolStripMenuItemMoveUp,
-            this.toolStripMenuItemMoveDn,
-            this.toolStripSeparator3,
-            this.toolStripMenuItemRun,
-            this.toolStripMenuItemRunHere,
-            this.toolStripMenuItemRunStep});
-            this.contextMenuStripMain.Name = "contextMenuStripMain";
-            this.contextMenuStripMain.Size = new System.Drawing.Size(207, 252);
-            // 
-            // toolStripMenuItemNew
-            // 
-            this.toolStripMenuItemNew.Name = "toolStripMenuItemNew";
-            this.toolStripMenuItemNew.Size = new System.Drawing.Size(206, 26);
-            this.toolStripMenuItemNew.Text = "新建 (N/A/B)";
-            this.toolStripMenuItemNew.Click += new System.EventHandler(this.toolStripMenuItemNew_Click);
-            // 
-            // toolStripMenuItemMoveUp
-            // 
-            this.toolStripMenuItemMoveUp.Name = "toolStripMenuItemMoveUp";
-            this.toolStripMenuItemMoveUp.Size = new System.Drawing.Size(206, 26);
-            this.toolStripMenuItemMoveUp.Text = "上移 (Up)";
-            this.toolStripMenuItemMoveUp.Click += new System.EventHandler(this.toolStripMenuItemMoveUp_Click);
-            // 
-            // toolStripMenuItemMoveDn
-            // 
-            this.toolStripMenuItemMoveDn.Name = "toolStripMenuItemMoveDn";
-            this.toolStripMenuItemMoveDn.Size = new System.Drawing.Size(206, 26);
-            this.toolStripMenuItemMoveDn.Text = "下移 (Dn)";
-            this.toolStripMenuItemMoveDn.Click += new System.EventHandler(this.toolStripMenuItemMoveDn_Click);
-            // 
-            // toolStripMenuItemEdit
-            // 
-            this.toolStripMenuItemEdit.Name = "toolStripMenuItemEdit";
-            this.toolStripMenuItemEdit.Size = new System.Drawing.Size(206, 26);
-            this.toolStripMenuItemEdit.Text = "编辑 (D-Click)";
-            this.toolStripMenuItemEdit.Click += new System.EventHandler(this.toolStripMenuItemEdit_Click);
-            // 
-            // toolStripMenuItemDel
-            // 
-            this.toolStripMenuItemDel.Name = "toolStripMenuItemDel";
-            this.toolStripMenuItemDel.Size = new System.Drawing.Size(206, 26);
-            this.toolStripMenuItemDel.Text = "删除 (Delete)";
-            this.toolStripMenuItemDel.Click += new System.EventHandler(this.toolStripMenuItemDel_Click);
-            // 
-            // toolStripMenuItemRunStep
-            // 
-            this.toolStripMenuItemRunStep.Name = "toolStripMenuItemRunStep";
-            this.toolStripMenuItemRunStep.Size = new System.Drawing.Size(206, 26);
-            this.toolStripMenuItemRunStep.Text = "单步运行 (F10)";
-            this.toolStripMenuItemRunStep.Click += new System.EventHandler(this.toolStripMenuItemRunStep_Click);
-            // 
-            // toolStripMenuItemRunHere
-            // 
-            this.toolStripMenuItemRunHere.Name = "toolStripMenuItemRunHere";
-            this.toolStripMenuItemRunHere.Size = new System.Drawing.Size(206, 26);
-            this.toolStripMenuItemRunHere.Text = "从这运行 (F6)";
-            this.toolStripMenuItemRunHere.Click += new System.EventHandler(this.toolStripMenuItemRunHere_Click);
-            // 
-            // toolStripMenuItemRun
-            // 
-            this.toolStripMenuItemRun.Name = "toolStripMenuItemRun";
-            this.toolStripMenuItemRun.Size = new System.Drawing.Size(206, 26);
-            this.toolStripMenuItemRun.Text = "从头运行 (F5)";
-            this.toolStripMenuItemRun.Click += new System.EventHandler(this.toolStripMenuItemRun_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(203, 6);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(203, 6);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(203, 6);
+            this.treeViewMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewMain_KeyDown);
             // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1064, 581);
-            this.Controls.Add(this.buttonNewCmd);
-            this.Controls.Add(this.buttonNewGroup);
             this.Controls.Add(this.treeViewMain);
             this.Controls.Add(this.buttonSingleStep);
             this.Controls.Add(this.checkBoxHide);
@@ -646,10 +601,10 @@
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Keyboard and Mouse Control ";
+            this.contextMenuStripMain.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCmdConfigList)).EndInit();
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
-            this.contextMenuStripMain.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -692,10 +647,8 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemGetRegCode;
         private System.Windows.Forms.Button buttonSingleStep;
         private System.Windows.Forms.TreeView treeViewMain;
-        private System.Windows.Forms.Button buttonNewGroup;
-        private System.Windows.Forms.Button buttonNewCmd;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripMain;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemNew;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemNewCmd;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemMoveUp;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemMoveDn;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
@@ -706,6 +659,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRun;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRunHere;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRunStep;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemNewGrp;
     }
 }
 

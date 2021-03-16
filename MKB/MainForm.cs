@@ -1036,68 +1036,118 @@ namespace MKB
         }
 
 
-        // -------------------------------------------------------------------------------- //
-        // ----------------------------------- 新功能测试 ----------------------------------- //
-        // -------------------------------------------------------------------------------- //
-
-        private void buttonNewCmd_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 弹出命令配置窗口，会返回一个 CmdConfig 类型的变量 cmdConfigForm.m_cmdConfig
-                CmdConfigForm cmdConfigForm = new CmdConfigForm();
-                if (cmdConfigForm.ShowDialog(this) == DialogResult.OK)
-                {
-                    // 添加新命令
-                    string str = m_treeViewCtrl.CreateCmd(treeViewMain, cmdConfigForm.m_cmdConfig);
-                    if (!string.IsNullOrWhiteSpace(str))
-                    {
-                        MessageBox.Show(str, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void buttonNewGroup_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 弹出命令组配置窗口，会返回一个 GrpConfig 类型的变量 grpConfigForm.m_grpConfig
-                GrpConfigForm grpConfigForm = new GrpConfigForm();
-                if (grpConfigForm.ShowDialog(this) == DialogResult.OK)
-                {
-                    // 添加新命令组
-                    string str = m_treeViewCtrl.CreateGrp(treeViewMain, grpConfigForm.m_grpConfig);
-                    if (!string.IsNullOrWhiteSpace(str))
-                    {
-                        MessageBox.Show(str, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
         // -------------------------------------------------------------------------------- //
         // ------------------------------ 新功能测试，右键菜单栏 ------------------------------ //
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
-        /// 新建 命令/命令组
+        /// 快捷键
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void toolStripMenuItemNew_Click(object sender, EventArgs e)
+        private void treeViewMain_KeyDown(object sender, KeyEventArgs e)
         {
             try
             {
+                // 新建 命令 Ctrl+N
+                if (e.Control && e.KeyCode == Keys.N)
+                {
+                    toolStripMenuItemNewCmd_Click(null, null);
+                }
+                // 新建 命令组 Alt+N
+                else if (e.Alt && e.KeyCode == Keys.N)
+                {
+                    toolStripMenuItemNewGrp_Click(null, null);
+                }
+                // 编辑 命令/命令组 Ctrl+E
+                else if (e.Control && e.KeyCode == Keys.E)
+                {
+                    toolStripMenuItemEdit_Click(null, null);
+                }
+                // 删除 命令/命令组 Delete
+                else if (e.KeyCode == Keys.Delete)
+                {
+                    toolStripMenuItemDel_Click(null, null);
+                }
+                // 上移 命令/命令组 Ctrl+Up
+                else if (e.Control && e.KeyCode == Keys.Up)
+                {
+                    toolStripMenuItemMoveUp_Click(null, null);
+                }
+                // 下移 命令/命令组 Ctrl+Dn
+                else if (e.Control && e.KeyCode == Keys.Down)
+                {
+                    toolStripMenuItemMoveDn_Click(null, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+}
 
+        /// <summary>
+        /// 新建 命令
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemNewCmd_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 添加 CmdNode 的时候，必须选中某一个 GrpNode
+                if (treeViewMain.SelectedNode == null)
+                {
+                    MessageBox.Show("仅允许在命令组下添加命令，请选中命令组节点或命令节点后再添加！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // 弹出命令配置窗口，添加新命令
+                CmdConfigForm cmdConfigForm = new CmdConfigForm();
+                if (cmdConfigForm.ShowDialog(this) == DialogResult.OK)
+                {
+                    string str = m_treeViewCtrl.CreateCmd(treeViewMain, cmdConfigForm.m_cmdConfig);
+                    if (!string.IsNullOrWhiteSpace(str))
+                    {
+                        MessageBox.Show(str, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 新建 命令组
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemNewGrp_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 添加 GrpNode 的时候，必须处于根目录状态
+                if (treeViewMain.SelectedNode != null && treeViewMain.SelectedNode.Level != 0)
+                {
+                    MessageBox.Show("仅允许在根目录下添加命令组，请选中根目录节点后再添加！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // 弹出命令组配置窗口，添加新命令组
+                GrpConfigForm grpConfigForm = new GrpConfigForm();
+                if (grpConfigForm.ShowDialog(this) == DialogResult.OK)
+                {
+                    string str = m_treeViewCtrl.CreateGrp(treeViewMain, grpConfigForm.m_grpConfig);
+                    if (!string.IsNullOrWhiteSpace(str))
+                    {
+                        MessageBox.Show(str, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -1114,7 +1164,41 @@ namespace MKB
         {
             try
             {
+                // 必须选中某一个 Node
+                if (treeViewMain.SelectedNode == null)
+                {
+                    MessageBox.Show("请选中所要编辑的命令组节点或命令节点！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
+                // 弹出 命令组 配置窗口
+                if (treeViewMain.SelectedNode.Level == 0)
+                {
+                    GrpConfigForm grpConfigForm = new GrpConfigForm((GrpConfig)treeViewMain.SelectedNode.Tag);
+                    if (grpConfigForm.ShowDialog(this) == DialogResult.OK)
+                    {
+                        string str = m_treeViewCtrl.EditGrp(treeViewMain, grpConfigForm.m_grpConfig);
+                        if (!string.IsNullOrWhiteSpace(str))
+                        {
+                            MessageBox.Show(str, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+                }
+                // 弹出 命令 配置窗口
+                else if (treeViewMain.SelectedNode.Level == 1)
+                {
+                    CmdConfigForm cmdConfigForm = new CmdConfigForm((CmdConfig)treeViewMain.SelectedNode.Tag);
+                    if (cmdConfigForm.ShowDialog(this) == DialogResult.OK)
+                    {
+                        string str = m_treeViewCtrl.EditCmd(treeViewMain, cmdConfigForm.m_cmdConfig);
+                        if (!string.IsNullOrWhiteSpace(str))
+                        {
+                            MessageBox.Show(str, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -1131,7 +1215,15 @@ namespace MKB
         {
             try
             {
+                // 必须选中某一个 Node
+                if (treeViewMain.SelectedNode == null)
+                {
+                    MessageBox.Show("请选中所要删除的命令组节点或命令节点！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
+                // 删除节点
+                m_treeViewCtrl.DeleteNode(treeViewMain);
             }
             catch (Exception ex)
             {
@@ -1148,7 +1240,15 @@ namespace MKB
         {
             try
             {
+                // 必须选中某一个 Node
+                if (treeViewMain.SelectedNode == null)
+                {
+                    MessageBox.Show("请选中所要删除的命令组节点或命令节点！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
+                // 上移节点
+                m_treeViewCtrl.MoveUpNode(treeViewMain);
             }
             catch (Exception ex)
             {
@@ -1165,7 +1265,15 @@ namespace MKB
         {
             try
             {
+                // 必须选中某一个 Node
+                if (treeViewMain.SelectedNode == null)
+                {
+                    MessageBox.Show("请选中所要删除的命令组节点或命令节点！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
 
+                // 下移节点
+                m_treeViewCtrl.MoveDnNode(treeViewMain);
             }
             catch (Exception ex)
             {

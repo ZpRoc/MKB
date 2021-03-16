@@ -20,10 +20,31 @@ namespace MKB.SubForm
         public GrpConfigForm()
         {
             InitializeComponent();
+
+            // 相关控件初始化
+            ComponentInitialization();
         }
 
+        public GrpConfigForm(GrpConfig grpConfig)
+        {
+            InitializeComponent();
 
+            // 相关控件初始化
+            ComponentInitialization();
 
+            // 若指定 grpConfig，则给相关控件赋值
+            m_grpConfig = grpConfig;
+            SetComponent(m_grpConfig);
+        }
+
+        // -------------------------------------------------------------------------------- //
+        // --------------------------- ComponentInitialization ---------------------------- //
+        // -------------------------------------------------------------------------------- //
+
+        private void ComponentInitialization()
+        {
+            
+        }
 
 
         // -------------------------------------------------------------------------------- //
@@ -40,15 +61,15 @@ namespace MKB.SubForm
             try
             {
                 // 简单的保护，后续可优化
-                if (string.IsNullOrWhiteSpace(textBoxName.Text))
+                if (Convert.ToInt32(numericUpDownTimes.Value) < 0)
                 {
                     MessageBox.Show("输入有误！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else
                 {
-                    // 控件属性转 CmdConfig 类型
-                    m_grpConfig.m_name = textBoxName.Text;
+                    // 控件属性转 GrpConfig 类型
+                    m_grpConfig = GetComponent();
 
                     // 关闭窗体并返回
                     this.DialogResult = DialogResult.OK;
@@ -99,6 +120,29 @@ namespace MKB.SubForm
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        // -------------------------------------------------------------------------------- //
+        // ---------------------------------- Functions ----------------------------------- //
+        // -------------------------------------------------------------------------------- //
+
+        /// <summary>
+        /// 设置相关控件的属性
+        /// </summary>
+        /// <param name="grpConfig"></param>
+        public void SetComponent(GrpConfig grpConfig)
+        {
+            numericUpDownTimes.Value = m_grpConfig.m_times;
+            textBoxDescr.Text        = m_grpConfig.m_descr;
+        }
+
+        /// <summary>
+        /// 获取相关控件的属性
+        /// </summary>
+        /// <returns></returns>
+        public GrpConfig GetComponent()
+        {
+            return new GrpConfig(Convert.ToInt32(numericUpDownTimes.Value), textBoxDescr.Text);
         }
     }
 }

@@ -189,7 +189,7 @@
             // buttonOK
             // 
             this.buttonOK.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.buttonOK.Location = new System.Drawing.Point(139, 310);
+            this.buttonOK.Location = new System.Drawing.Point(145, 310);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(100, 33);
             this.buttonOK.TabIndex = 10;
