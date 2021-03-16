@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MKB.SubForm
+namespace MKB.DataHandle
 {
     /// <summary>
     /// CmdConfig:

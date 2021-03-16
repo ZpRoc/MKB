@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataHandle\TreeViewCtrl.cs" />
     <Compile Include="Encryption\SecretKey.cs" />
     <Compile Include="SubForm\AboutForm.cs">
       <SubType>Form</SubType>
@@ -75,7 +76,7 @@
     <Compile Include="SubForm\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="SubForm\CmdConfig.cs" />
+    <Compile Include="DataHandle\CmdConfig.cs" />
     <Compile Include="SubForm\CmdConfigForm.cs">
       <SubType>Form</SubType>
     </Compile>

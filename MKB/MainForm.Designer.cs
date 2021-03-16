@@ -76,6 +76,7 @@
             this.toolStripMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonSingleStep = new System.Windows.Forms.Button();
+            this.treeViewMain = new System.Windows.Forms.TreeView();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCmdConfigList)).BeginInit();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
@@ -371,21 +372,21 @@
             // toolStripMenuItemImport
             // 
             this.toolStripMenuItemImport.Name = "toolStripMenuItemImport";
-            this.toolStripMenuItemImport.Size = new System.Drawing.Size(116, 26);
+            this.toolStripMenuItemImport.Size = new System.Drawing.Size(180, 26);
             this.toolStripMenuItemImport.Text = "导入";
             this.toolStripMenuItemImport.Click += new System.EventHandler(this.toolStripMenuItemImport_Click);
             // 
             // toolStripMenuItemExport
             // 
             this.toolStripMenuItemExport.Name = "toolStripMenuItemExport";
-            this.toolStripMenuItemExport.Size = new System.Drawing.Size(116, 26);
+            this.toolStripMenuItemExport.Size = new System.Drawing.Size(180, 26);
             this.toolStripMenuItemExport.Text = "导出";
             this.toolStripMenuItemExport.Click += new System.EventHandler(this.toolStripMenuItemExport_Click);
             // 
             // toolStripMenuItemExit
             // 
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
-            this.toolStripMenuItemExit.Size = new System.Drawing.Size(116, 26);
+            this.toolStripMenuItemExit.Size = new System.Drawing.Size(180, 26);
             this.toolStripMenuItemExit.Text = "退出";
             this.toolStripMenuItemExit.Click += new System.EventHandler(this.toolStripMenuItemExit_Click);
             // 
@@ -431,7 +432,7 @@
             // toolStripMenuItemAbout
             // 
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
-            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(116, 26);
+            this.toolStripMenuItemAbout.Size = new System.Drawing.Size(180, 26);
             this.toolStripMenuItemAbout.Text = "关于";
             this.toolStripMenuItemAbout.Click += new System.EventHandler(this.toolStripMenuItemAbout_Click);
             // 
@@ -448,11 +449,19 @@
             this.buttonSingleStep.UseVisualStyleBackColor = true;
             this.buttonSingleStep.Click += new System.EventHandler(this.buttonSingleStep_Click);
             // 
+            // treeViewMain
+            // 
+            this.treeViewMain.Location = new System.Drawing.Point(34, 122);
+            this.treeViewMain.Name = "treeViewMain";
+            this.treeViewMain.Size = new System.Drawing.Size(397, 403);
+            this.treeViewMain.TabIndex = 17;
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(1064, 581);
+            this.Controls.Add(this.treeViewMain);
             this.Controls.Add(this.buttonSingleStep);
             this.Controls.Add(this.checkBoxHide);
             this.Controls.Add(this.progressBarMain);
@@ -522,6 +531,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemAbout;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemGetRegCode;
         private System.Windows.Forms.Button buttonSingleStep;
+        private System.Windows.Forms.TreeView treeViewMain;
     }
 }
 
