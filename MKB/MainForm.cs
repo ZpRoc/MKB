@@ -34,6 +34,9 @@ namespace MKB
         MouseControl m_mouseCtrl = new MouseControl();
         KeybdControl m_keybdCtrl = new KeybdControl();
 
+        // TreeViewMain
+        TreeViewCtrl m_treeViewCtrl = new TreeViewCtrl();
+
         // 命令列表 & 命令运行标志
         List<CmdConfig> m_cmdConfigList = new List<CmdConfig>();
         int m_runStep      = 0;                 // 命令列表运行的步数
@@ -1029,9 +1032,57 @@ namespace MKB
         /// <param name="e"></param>
         private void labelTitle_DoubleClick(object sender, EventArgs e)
         {
-
+            
         }
 
-        
+
+        // -------------------------------------------------------------------------------- //
+        // ----------------------------------- 新功能测试 ----------------------------------- //
+        // -------------------------------------------------------------------------------- //
+
+        private void buttonNewCmd_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 弹出命令配置窗口，会返回一个 CmdConfig 类型的变量 cmdConfigForm.m_cmdConfig
+                CmdConfigForm cmdConfigForm = new CmdConfigForm();
+                if (cmdConfigForm.ShowDialog(this) == DialogResult.OK)
+                {
+                    // 添加新命令
+                    string str = m_treeViewCtrl.CreateCmd(treeViewMain, cmdConfigForm.m_cmdConfig);
+                    if (!string.IsNullOrWhiteSpace(str))
+                    {
+                        MessageBox.Show(str, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void buttonNewGroup_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 弹出命令组配置窗口，会返回一个 GrpConfig 类型的变量 grpConfigForm.m_grpConfig
+                GrpConfigForm grpConfigForm = new GrpConfigForm();
+                if (grpConfigForm.ShowDialog(this) == DialogResult.OK)
+                {
+                    // 添加新命令组
+                    string str = m_treeViewCtrl.CreateGrp(treeViewMain, grpConfigForm.m_grpConfig);
+                    if (!string.IsNullOrWhiteSpace(str))
+                    {
+                        MessageBox.Show(str, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

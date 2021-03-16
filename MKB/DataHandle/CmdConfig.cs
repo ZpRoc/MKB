@@ -8,7 +8,7 @@ namespace MKB.DataHandle
 {
     /// <summary>
     /// CmdConfig:
-    ///     命令配置 数据类型定义
+    ///     命令 数据类型定义
     /// Function:
     ///     public string[] Decompose(): 将 CmdConfig 分解成 string[] 
     /// Variable:

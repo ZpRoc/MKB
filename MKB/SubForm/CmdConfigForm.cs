@@ -15,7 +15,7 @@ namespace MKB.SubForm
 {
     public partial class CmdConfigForm : Form
     {
-        // 命令配置类
+        // 命令 配置类
         public CmdConfig m_cmdConfig = new CmdConfig();
 
         // 鼠标键盘控制类
@@ -78,7 +78,7 @@ namespace MKB.SubForm
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -104,7 +104,7 @@ namespace MKB.SubForm
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -120,7 +120,7 @@ namespace MKB.SubForm
                 // 简单的保护，后续可优化
                 if (Convert.ToDouble(textBoxPosX.Text) < 0 || Convert.ToDouble(textBoxPosY.Text) < 0 || Convert.ToDouble(textBoxDelay.Text) < 0)
                 {
-                    MessageBox.Show("输入有误！");
+                    MessageBox.Show("输入有误！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else
@@ -135,7 +135,7 @@ namespace MKB.SubForm
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -154,7 +154,7 @@ namespace MKB.SubForm
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -189,7 +189,7 @@ namespace MKB.SubForm
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -240,7 +240,7 @@ namespace MKB.SubForm
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -292,7 +292,7 @@ namespace MKB.SubForm
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -317,7 +317,7 @@ namespace MKB.SubForm
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
