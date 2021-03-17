@@ -48,7 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>ZpRoc.ico</ApplicationIcon>
+    <ApplicationIcon>ico\ZpRoc.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="MyXls.SL2">
@@ -131,6 +131,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="SubForm\GrpConfigForm.resx">
       <DependentUpon>GrpConfigForm.cs</DependentUpon>
@@ -167,7 +168,76 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ZpRoc.ico" />
+    <None Include="ico\ZpRoc.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\Delete.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\Up.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\Down.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\about.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\cmd.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\edit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\exit.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\export.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\group.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\import.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\key.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\lock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\move_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\move_up.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\paste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\run.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\run_here.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\run_step.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\stop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\unlocked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\locked.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

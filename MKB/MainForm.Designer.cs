@@ -31,21 +31,10 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.contextMenuStripMain = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripMenuItemNewCmd = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemNewGrp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemDel = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemMoveUp = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemMoveDn = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemRun = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemStop = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemRunHere = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItemRunStep = new System.Windows.Forms.ToolStripMenuItem();
             this.labelTitle = new System.Windows.Forms.Label();
-            this.labelAuthor = new System.Windows.Forms.Label();
             this.progressBarMain = new System.Windows.Forms.ProgressBar();
             this.timerMain = new System.Windows.Forms.Timer(this.components);
             this.menuStripMain = new System.Windows.Forms.MenuStrip();
@@ -62,6 +51,18 @@
             this.toolStripMenuItemHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.treeViewMain = new System.Windows.Forms.TreeView();
+            this.toolStripMenuItemNewCmd = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemNewGrp = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemDel = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemMoveUp = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemMoveDn = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRun = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemStop = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRunHere = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItemRunStep = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStripMain.SuspendLayout();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
@@ -74,6 +75,8 @@
             this.toolStripMenuItemNewGrp,
             this.toolStripSeparator1,
             this.toolStripMenuItemEdit,
+            this.toolStripMenuItemCopy,
+            this.toolStripMenuItemPaste,
             this.toolStripMenuItemDel,
             this.toolStripSeparator2,
             this.toolStripMenuItemMoveUp,
@@ -84,98 +87,28 @@
             this.toolStripMenuItemRunHere,
             this.toolStripMenuItemRunStep});
             this.contextMenuStripMain.Name = "contextMenuStripMain";
-            this.contextMenuStripMain.Size = new System.Drawing.Size(216, 282);
-            // 
-            // toolStripMenuItemNewCmd
-            // 
-            this.toolStripMenuItemNewCmd.Name = "toolStripMenuItemNewCmd";
-            this.toolStripMenuItemNewCmd.Size = new System.Drawing.Size(215, 26);
-            this.toolStripMenuItemNewCmd.Text = "新命令 (Ctrl+N)";
-            this.toolStripMenuItemNewCmd.Click += new System.EventHandler(this.toolStripMenuItemNewCmd_Click);
-            // 
-            // toolStripMenuItemNewGrp
-            // 
-            this.toolStripMenuItemNewGrp.Name = "toolStripMenuItemNewGrp";
-            this.toolStripMenuItemNewGrp.Size = new System.Drawing.Size(215, 26);
-            this.toolStripMenuItemNewGrp.Text = "新建组 (Alt+N)";
-            this.toolStripMenuItemNewGrp.Click += new System.EventHandler(this.toolStripMenuItemNewGrp_Click);
+            this.contextMenuStripMain.Size = new System.Drawing.Size(216, 334);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(212, 6);
             // 
-            // toolStripMenuItemEdit
-            // 
-            this.toolStripMenuItemEdit.Name = "toolStripMenuItemEdit";
-            this.toolStripMenuItemEdit.Size = new System.Drawing.Size(215, 26);
-            this.toolStripMenuItemEdit.Text = "编辑 (Ctrl+E)";
-            this.toolStripMenuItemEdit.Click += new System.EventHandler(this.toolStripMenuItemEdit_Click);
-            // 
-            // toolStripMenuItemDel
-            // 
-            this.toolStripMenuItemDel.Name = "toolStripMenuItemDel";
-            this.toolStripMenuItemDel.Size = new System.Drawing.Size(215, 26);
-            this.toolStripMenuItemDel.Text = "删除 (Delete)";
-            this.toolStripMenuItemDel.Click += new System.EventHandler(this.toolStripMenuItemDel_Click);
-            // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(212, 6);
-            // 
-            // toolStripMenuItemMoveUp
-            // 
-            this.toolStripMenuItemMoveUp.Name = "toolStripMenuItemMoveUp";
-            this.toolStripMenuItemMoveUp.Size = new System.Drawing.Size(215, 26);
-            this.toolStripMenuItemMoveUp.Text = "上移 (Ctrl+Up)";
-            this.toolStripMenuItemMoveUp.Click += new System.EventHandler(this.toolStripMenuItemMoveUp_Click);
-            // 
-            // toolStripMenuItemMoveDn
-            // 
-            this.toolStripMenuItemMoveDn.Name = "toolStripMenuItemMoveDn";
-            this.toolStripMenuItemMoveDn.Size = new System.Drawing.Size(215, 26);
-            this.toolStripMenuItemMoveDn.Text = "下移 (Ctrl+Dn)";
-            this.toolStripMenuItemMoveDn.Click += new System.EventHandler(this.toolStripMenuItemMoveDn_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(212, 6);
             // 
-            // toolStripMenuItemRun
-            // 
-            this.toolStripMenuItemRun.Name = "toolStripMenuItemRun";
-            this.toolStripMenuItemRun.Size = new System.Drawing.Size(215, 26);
-            this.toolStripMenuItemRun.Text = "运行 (F5)";
-            this.toolStripMenuItemRun.Click += new System.EventHandler(this.toolStripMenuItemRun_Click);
-            // 
-            // toolStripMenuItemStop
-            // 
-            this.toolStripMenuItemStop.Name = "toolStripMenuItemStop";
-            this.toolStripMenuItemStop.Size = new System.Drawing.Size(215, 26);
-            this.toolStripMenuItemStop.Text = "停止 (Shift+F5)";
-            this.toolStripMenuItemStop.Click += new System.EventHandler(this.toolStripMenuItemStop_Click);
-            // 
-            // toolStripMenuItemRunHere
-            // 
-            this.toolStripMenuItemRunHere.Name = "toolStripMenuItemRunHere";
-            this.toolStripMenuItemRunHere.Size = new System.Drawing.Size(215, 26);
-            this.toolStripMenuItemRunHere.Text = "从这运行 (F6)";
-            this.toolStripMenuItemRunHere.Click += new System.EventHandler(this.toolStripMenuItemRunHere_Click);
-            // 
-            // toolStripMenuItemRunStep
-            // 
-            this.toolStripMenuItemRunStep.Name = "toolStripMenuItemRunStep";
-            this.toolStripMenuItemRunStep.Size = new System.Drawing.Size(215, 26);
-            this.toolStripMenuItemRunStep.Text = "单步运行 (F10)";
-            this.toolStripMenuItemRunStep.Click += new System.EventHandler(this.toolStripMenuItemRunStep_Click);
-            // 
             // labelTitle
             // 
             this.labelTitle.AutoSize = true;
             this.labelTitle.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelTitle.Location = new System.Drawing.Point(360, 37);
+            this.labelTitle.Location = new System.Drawing.Point(78, 40);
             this.labelTitle.Name = "labelTitle";
             this.labelTitle.Size = new System.Drawing.Size(274, 31);
             this.labelTitle.TabIndex = 8;
@@ -183,22 +116,11 @@
             this.labelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.labelTitle.DoubleClick += new System.EventHandler(this.labelTitle_DoubleClick);
             // 
-            // labelAuthor
-            // 
-            this.labelAuthor.AutoSize = true;
-            this.labelAuthor.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelAuthor.Location = new System.Drawing.Point(12, 546);
-            this.labelAuthor.Name = "labelAuthor";
-            this.labelAuthor.Size = new System.Drawing.Size(127, 21);
-            this.labelAuthor.TabIndex = 10;
-            this.labelAuthor.Text = "Author: ZpRoc";
-            this.labelAuthor.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // progressBarMain
             // 
-            this.progressBarMain.Location = new System.Drawing.Point(157, 546);
+            this.progressBarMain.Location = new System.Drawing.Point(16, 548);
             this.progressBarMain.Name = "progressBarMain";
-            this.progressBarMain.Size = new System.Drawing.Size(800, 20);
+            this.progressBarMain.Size = new System.Drawing.Size(400, 20);
             this.progressBarMain.TabIndex = 13;
             // 
             // timerMain
@@ -214,7 +136,7 @@
             this.toolStripMenuItemHelp});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Size = new System.Drawing.Size(1064, 29);
+            this.menuStripMain.Size = new System.Drawing.Size(432, 29);
             this.menuStripMain.TabIndex = 15;
             this.menuStripMain.Text = "menuStrip1";
             // 
@@ -231,6 +153,7 @@
             // 
             // toolStripMenuItemImport
             // 
+            this.toolStripMenuItemImport.Image = global::MKB.Properties.Resources.import;
             this.toolStripMenuItemImport.Name = "toolStripMenuItemImport";
             this.toolStripMenuItemImport.Size = new System.Drawing.Size(180, 26);
             this.toolStripMenuItemImport.Text = "导入";
@@ -238,6 +161,7 @@
             // 
             // toolStripMenuItemExport
             // 
+            this.toolStripMenuItemExport.Image = global::MKB.Properties.Resources.export;
             this.toolStripMenuItemExport.Name = "toolStripMenuItemExport";
             this.toolStripMenuItemExport.Size = new System.Drawing.Size(180, 26);
             this.toolStripMenuItemExport.Text = "导出";
@@ -250,6 +174,7 @@
             // 
             // toolStripMenuItemExit
             // 
+            this.toolStripMenuItemExit.Image = global::MKB.Properties.Resources.exit;
             this.toolStripMenuItemExit.Name = "toolStripMenuItemExit";
             this.toolStripMenuItemExit.Size = new System.Drawing.Size(180, 26);
             this.toolStripMenuItemExit.Text = "退出";
@@ -268,6 +193,7 @@
             // 
             // toolStripMenuItemMachineCode
             // 
+            this.toolStripMenuItemMachineCode.Image = global::MKB.Properties.Resources.locked;
             this.toolStripMenuItemMachineCode.Name = "toolStripMenuItemMachineCode";
             this.toolStripMenuItemMachineCode.Size = new System.Drawing.Size(170, 26);
             this.toolStripMenuItemMachineCode.Text = "获取机器码";
@@ -275,6 +201,7 @@
             // 
             // toolStripMenuItemSetRegCode
             // 
+            this.toolStripMenuItemSetRegCode.Image = global::MKB.Properties.Resources.unlocked;
             this.toolStripMenuItemSetRegCode.Name = "toolStripMenuItemSetRegCode";
             this.toolStripMenuItemSetRegCode.Size = new System.Drawing.Size(170, 26);
             this.toolStripMenuItemSetRegCode.Text = "载入注册码";
@@ -287,6 +214,7 @@
             // 
             // toolStripMenuItemGetRegCode
             // 
+            this.toolStripMenuItemGetRegCode.Image = global::MKB.Properties.Resources.key;
             this.toolStripMenuItemGetRegCode.Name = "toolStripMenuItemGetRegCode";
             this.toolStripMenuItemGetRegCode.Size = new System.Drawing.Size(170, 26);
             this.toolStripMenuItemGetRegCode.Text = "获取注册码";
@@ -302,6 +230,7 @@
             // 
             // toolStripMenuItemAbout
             // 
+            this.toolStripMenuItemAbout.Image = global::MKB.Properties.Resources.about;
             this.toolStripMenuItemAbout.Name = "toolStripMenuItemAbout";
             this.toolStripMenuItemAbout.Size = new System.Drawing.Size(116, 26);
             this.toolStripMenuItemAbout.Text = "关于";
@@ -311,20 +240,115 @@
             // 
             this.treeViewMain.ContextMenuStrip = this.contextMenuStripMain;
             this.treeViewMain.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.treeViewMain.Location = new System.Drawing.Point(16, 88);
+            this.treeViewMain.Location = new System.Drawing.Point(16, 80);
             this.treeViewMain.Name = "treeViewMain";
-            this.treeViewMain.Size = new System.Drawing.Size(447, 403);
+            this.treeViewMain.Size = new System.Drawing.Size(400, 455);
             this.treeViewMain.TabIndex = 17;
             this.treeViewMain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.treeViewMain_KeyDown);
+            // 
+            // toolStripMenuItemNewCmd
+            // 
+            this.toolStripMenuItemNewCmd.Image = global::MKB.Properties.Resources.cmd;
+            this.toolStripMenuItemNewCmd.Name = "toolStripMenuItemNewCmd";
+            this.toolStripMenuItemNewCmd.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemNewCmd.Text = "新命令 (Ctrl+N)";
+            this.toolStripMenuItemNewCmd.Click += new System.EventHandler(this.toolStripMenuItemNewCmd_Click);
+            // 
+            // toolStripMenuItemNewGrp
+            // 
+            this.toolStripMenuItemNewGrp.Image = global::MKB.Properties.Resources.group;
+            this.toolStripMenuItemNewGrp.Name = "toolStripMenuItemNewGrp";
+            this.toolStripMenuItemNewGrp.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemNewGrp.Text = "新建组 (Alt+N)";
+            this.toolStripMenuItemNewGrp.Click += new System.EventHandler(this.toolStripMenuItemNewGrp_Click);
+            // 
+            // toolStripMenuItemEdit
+            // 
+            this.toolStripMenuItemEdit.Image = global::MKB.Properties.Resources.edit;
+            this.toolStripMenuItemEdit.Name = "toolStripMenuItemEdit";
+            this.toolStripMenuItemEdit.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemEdit.Text = "编辑 (Ctrl+E)";
+            this.toolStripMenuItemEdit.Click += new System.EventHandler(this.toolStripMenuItemEdit_Click);
+            // 
+            // toolStripMenuItemCopy
+            // 
+            this.toolStripMenuItemCopy.Image = global::MKB.Properties.Resources.copy;
+            this.toolStripMenuItemCopy.Name = "toolStripMenuItemCopy";
+            this.toolStripMenuItemCopy.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemCopy.Text = "复制 (Ctrl+C)";
+            this.toolStripMenuItemCopy.Click += new System.EventHandler(this.toolStripMenuItemCopy_Click);
+            // 
+            // toolStripMenuItemPaste
+            // 
+            this.toolStripMenuItemPaste.Image = global::MKB.Properties.Resources.paste;
+            this.toolStripMenuItemPaste.Name = "toolStripMenuItemPaste";
+            this.toolStripMenuItemPaste.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemPaste.Text = "粘贴 (Ctrl+V)";
+            this.toolStripMenuItemPaste.Click += new System.EventHandler(this.toolStripMenuItemPaste_Click);
+            // 
+            // toolStripMenuItemDel
+            // 
+            this.toolStripMenuItemDel.Image = global::MKB.Properties.Resources.delete;
+            this.toolStripMenuItemDel.Name = "toolStripMenuItemDel";
+            this.toolStripMenuItemDel.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemDel.Text = "删除 (Delete)";
+            this.toolStripMenuItemDel.Click += new System.EventHandler(this.toolStripMenuItemDel_Click);
+            // 
+            // toolStripMenuItemMoveUp
+            // 
+            this.toolStripMenuItemMoveUp.Image = global::MKB.Properties.Resources.move_up;
+            this.toolStripMenuItemMoveUp.Name = "toolStripMenuItemMoveUp";
+            this.toolStripMenuItemMoveUp.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemMoveUp.Text = "上移 (Shift+Up)";
+            this.toolStripMenuItemMoveUp.Click += new System.EventHandler(this.toolStripMenuItemMoveUp_Click);
+            // 
+            // toolStripMenuItemMoveDn
+            // 
+            this.toolStripMenuItemMoveDn.Image = global::MKB.Properties.Resources.move_down;
+            this.toolStripMenuItemMoveDn.Name = "toolStripMenuItemMoveDn";
+            this.toolStripMenuItemMoveDn.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemMoveDn.Text = "下移 (Shift+Dn)";
+            this.toolStripMenuItemMoveDn.Click += new System.EventHandler(this.toolStripMenuItemMoveDn_Click);
+            // 
+            // toolStripMenuItemRun
+            // 
+            this.toolStripMenuItemRun.Image = global::MKB.Properties.Resources.run;
+            this.toolStripMenuItemRun.Name = "toolStripMenuItemRun";
+            this.toolStripMenuItemRun.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemRun.Text = "运行 (F5)";
+            this.toolStripMenuItemRun.Click += new System.EventHandler(this.toolStripMenuItemRun_Click);
+            // 
+            // toolStripMenuItemStop
+            // 
+            this.toolStripMenuItemStop.Image = global::MKB.Properties.Resources.stop;
+            this.toolStripMenuItemStop.Name = "toolStripMenuItemStop";
+            this.toolStripMenuItemStop.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemStop.Text = "停止 (Shift+F5)";
+            this.toolStripMenuItemStop.Click += new System.EventHandler(this.toolStripMenuItemStop_Click);
+            // 
+            // toolStripMenuItemRunHere
+            // 
+            this.toolStripMenuItemRunHere.Image = global::MKB.Properties.Resources.run_here;
+            this.toolStripMenuItemRunHere.Name = "toolStripMenuItemRunHere";
+            this.toolStripMenuItemRunHere.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemRunHere.Text = "从这运行 (F6)";
+            this.toolStripMenuItemRunHere.Click += new System.EventHandler(this.toolStripMenuItemRunHere_Click);
+            // 
+            // toolStripMenuItemRunStep
+            // 
+            this.toolStripMenuItemRunStep.Image = global::MKB.Properties.Resources.run_step;
+            this.toolStripMenuItemRunStep.Name = "toolStripMenuItemRunStep";
+            this.toolStripMenuItemRunStep.Size = new System.Drawing.Size(215, 26);
+            this.toolStripMenuItemRunStep.Text = "单步运行 (F10)";
+            this.toolStripMenuItemRunStep.Click += new System.EventHandler(this.toolStripMenuItemRunStep_Click);
             // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(1064, 581);
+            this.ClientSize = new System.Drawing.Size(432, 581);
             this.Controls.Add(this.treeViewMain);
             this.Controls.Add(this.progressBarMain);
-            this.Controls.Add(this.labelAuthor);
             this.Controls.Add(this.labelTitle);
             this.Controls.Add(this.menuStripMain);
             this.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -335,7 +359,7 @@
             this.Name = "MainForm";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Keyboard and Mouse Control ";
+            this.Text = "Mouse and Keyboard Control ";
             this.contextMenuStripMain.ResumeLayout(false);
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
@@ -346,7 +370,6 @@
 
         #endregion
         private System.Windows.Forms.Label labelTitle;
-        private System.Windows.Forms.Label labelAuthor;
         private System.Windows.Forms.ProgressBar progressBarMain;
         private System.Windows.Forms.Timer timerMain;
         private System.Windows.Forms.MenuStrip menuStripMain;
@@ -377,6 +400,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorFile1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparatorActive1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemStop;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemCopy;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemPaste;
     }
 }
 

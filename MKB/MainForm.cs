@@ -354,18 +354,28 @@ namespace MKB
                 {
                     toolStripMenuItemEdit_Click(null, null);
                 }
+                // 复制 命令/命令组 Ctrl+C
+                else if (e.Control && e.KeyCode == Keys.C)
+                {
+                    toolStripMenuItemCopy_Click(null, null);
+                }
+                // 粘贴 命令/命令组 Ctrl+E
+                else if (e.Control && e.KeyCode == Keys.V)
+                {
+                    toolStripMenuItemPaste_Click(null, null);
+                }
                 // 删除 命令/命令组 Delete
                 else if (e.KeyCode == Keys.Delete)
                 {
                     toolStripMenuItemDel_Click(null, null);
                 }
                 // 上移 命令/命令组 Ctrl+Up
-                else if (e.Control && e.KeyCode == Keys.Up)
+                else if (e.Shift && e.KeyCode == Keys.Up)
                 {
                     toolStripMenuItemMoveUp_Click(null, null);
                 }
                 // 下移 命令/命令组 Ctrl+Dn
-                else if (e.Control && e.KeyCode == Keys.Down)
+                else if (e.Shift && e.KeyCode == Keys.Down)
                 {
                     toolStripMenuItemMoveDn_Click(null, null);
                 }
@@ -507,6 +517,72 @@ namespace MKB
                             return;
                         }
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 复制 命令/命令组
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemCopy_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 必须选中某一个 Node
+                if (treeViewMain.SelectedNode == null)
+                {
+                    MessageBox.Show("请选中所要编辑的命令组节点或命令节点！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // 复制 命令组
+                if (treeViewMain.SelectedNode.Level == 0)
+                {
+                    
+                }
+                // 复制 命令
+                else if (treeViewMain.SelectedNode.Level == 1)
+                {
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 粘贴 命令/命令组
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemPaste_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 必须选中某一个 Node
+                if (treeViewMain.SelectedNode == null)
+                {
+                    MessageBox.Show("请选中所要编辑的命令组节点或命令节点！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // 粘贴 命令组
+                if (treeViewMain.SelectedNode.Level == 0)
+                {
+
+                }
+                // 粘贴 命令
+                else if (treeViewMain.SelectedNode.Level == 1)
+                {
+
                 }
             }
             catch (Exception ex)
@@ -790,5 +866,7 @@ namespace MKB
         {
             
         }
+
+        
     }
 }
