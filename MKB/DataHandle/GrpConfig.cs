@@ -9,6 +9,7 @@ namespace MKB.DataHandle
     /// GrpConfig:
     ///     命令组 数据类型定义
     /// Function:
+    ///     private string ItemToStr(ComboBox.ObjectCollection items)
     ///     public string[] Decompose(): 将 GrpConfig 分解成 string[] 
     /// Variable:
     ///     m_times   : 循环次数
@@ -51,12 +52,17 @@ namespace MKB.DataHandle
         /// <returns></returns>
         private string ItemToStr(ComboBox.ObjectCollection items)
         {
+            // items 空处理
+            if (items.Count == 0)       return string.Empty;
+
+            // 转成 string，用 "|" 分割
             string paramPos = string.Empty;
             foreach (object item in items)
             {
                 paramPos += item.ToString() + "|";
             }
 
+            // 返回
             return paramPos.Substring(0, paramPos.Length - 3);
         }
 

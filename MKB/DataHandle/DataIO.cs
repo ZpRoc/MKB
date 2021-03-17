@@ -9,17 +9,85 @@ using org.in2bits.MyXls;
 
 namespace MKB.DataHandle
 {
+    /// <summary>
+    /// DataIO:
+    ///     数据导入/导出 相关函数
+    /// Function:
+    ///     public void ExportTxt(TreeView treeView)
+    ///     public TreeView ImportTxt()
+    ///     
+    ///     public void ExportExcel(DataGridView dataGridView)
+    ///     public List<CmdConfig> ImportExcel()
+    /// Variable:
+    ///     None. 
+    /// Note:
+    ///     None. 
+    /// </summary>
     public class DataIO
     {
+        // -------------------------------------------------------------------------------- //
+        // ------------------------ 数据导入/导出 TreeView <--> TXT ------------------------- //
+        // -------------------------------------------------------------------------------- //
 
+        /// <summary>
+        /// 数据导出
+        /// </summary>
+        /// <param name="dataGridView"></param>
+        public void ExportTxt(TreeView treeView)
+        {
+            try
+            {
+                
 
+                // 完成导出
+                MessageBox.Show("导出完成！");
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(DateTime.Now.ToString("yyyy-MM-dd <HH:mm:ss:ffff>") + "\t"
+                                + "MainForm" + "\t" + "\n" + "ExportTxt catch:" + ex.Message);
+            }
+        }
 
+        /// <summary>
+        /// 数据导入
+        /// </summary>
+        /// <returns></returns>
+        public TreeView ImportTxt()
+        {
+            try
+            {
+                // 选择 txt 文件对话框
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "txt files (*.txt)|*.txt";
+                openFileDialog.InitialDirectory = System.Environment.CurrentDirectory;
 
+                if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    // 获取文件路径
+                    string filePath = openFileDialog.FileName.ToString();
+                    if (string.IsNullOrEmpty(filePath))
+                    {
+                        return (null);
+                    }
 
+                    // 
 
-
-
-
+                    // 返回
+                    return (null);
+                }
+                else
+                {
+                    return (null);
+                }
+            }
+            catch (Exception ex)
+            {
+                Trace.WriteLine(DateTime.Now.ToString("yyyy-MM-dd <HH:mm:ss:ffff>") + "\t"
+                                + "MainForm" + "\t" + "\n" + "ImportTxt catch:" + ex.Message);
+                return (null);
+            }
+        }
 
         // -------------------------------------------------------------------------------- //
         // --------------------- 数据导入/导出 DataGridView <--> Excel ---------------------- //

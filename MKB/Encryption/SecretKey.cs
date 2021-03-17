@@ -3,6 +3,24 @@
 
 namespace MKB.Encryption
 {
+    /// <summary>
+    /// SecretKey:
+    ///     加密/解密
+    /// Function:
+    ///     public string Encrypt(string m, string t)
+    ///     public string Decrypt(string m, string r)
+    ///     
+    ///     private string FormatCodeM(string m)
+    ///     private string FormatCodeT(string t)
+    ///     private string FormatCodeR(string r)
+    ///     private char AlphfShift(char ch, int offset, char start, char stop)
+    /// Variable:
+    ///     m_ADD1
+    ///     m_MULT
+    ///     m_ADD2
+    /// Note:
+    ///     None. 
+    /// </summary>
     public class SecretKey
     {
         // 需要保证 0 < (V + A1) * M + A2 < 100

@@ -4,6 +4,20 @@ using System.Management;
 
 namespace MKB.Encryption
 {
+    /// <summary>
+    /// SecretKey:
+    ///     加密/解密
+    /// Function:
+    ///     public static string GetMachineCode()
+    ///     
+    ///     public string GetCpuInfo()
+    ///     public string GetHDid()
+    ///     public string GetMoAddress()
+    /// Variable:
+    ///     None. 
+    /// Note:
+    ///     None. 
+    /// </summary>
     public class MachineCode
     {
         static MachineCode machineCode;

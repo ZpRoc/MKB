@@ -33,6 +33,7 @@ namespace MKB.DataHandle
 
         public CmdConfig()
         {
+
         }
 
         public CmdConfig(string type, string posX, string posY, string op, string text, string time, string unit, string descr)

@@ -8,9 +8,23 @@ namespace MKB.DataHandle
     /// TreeViewCtrl:
     ///     TreeView 控件的相关控制函数
     /// Function:
+    ///     public string CreateCmd(TreeView treeView, CmdConfig cmdConfig)
+    ///     public string CreateGrp(TreeView treeView, GrpConfig grpConfig)
     ///     
+    ///     public string EditCmd(TreeView treeView, CmdConfig cmdConfig)
+    ///     public string EditGrp(TreeView treeView, GrpConfig grpConfig)
+    ///     
+    ///     public string CopyNode(TreeView treeView)
+    ///     public string PasteNode(TreeView treeView)
+    ///     public string DeleteNode(TreeView treeView)
+    ///     
+    ///     public string MoveUpNode(TreeView treeView)
+    ///     public string MoveDnNode(TreeView treeView)
+    ///     
+    ///     private string ReCnt(string oldStr, int newCnt)
+    ///     private void RefreshText(TreeView treeView)
     /// Variable:
-    ///     
+    ///     None. 
     /// Note:
     ///     None. 
     /// </summary>
