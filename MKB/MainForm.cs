@@ -1,22 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.OleDb;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
-using org.in2bits.MyXls;
+using System.Collections.Generic;
 
 using MKB.CtrlClass;
-using MKB.SubForm;
 using MKB.Encryption;
 using MKB.DataHandle;
+using MKB.SubForm;
+
 
 namespace MKB
 {
@@ -70,19 +61,16 @@ namespace MKB
                     // -------------------- 当前命令行 高亮 -------------------- //
                     this.Invoke(new EventHandler(delegate
                     {
-                        // 取消先前的选中行状态
-                        foreach (DataGridViewRow dr in dataGridViewCmdConfigList.SelectedRows)
-                        {
-                            dr.Selected = false;
-                        }
+                        // 取消先前的选中行状态 (ZpRoc 需要添加)
 
-                        // 高亮当前选中行
-                        dataGridViewCmdConfigList.Rows[m_runStep].Selected = true;
+
+                        // 高亮当前选中行 (ZpRoc 需要添加)
+
 
                         // 滚动条设置 一个页面可显示 17 行
                         if (m_runStep > 16)
                         {
-                            dataGridViewCmdConfigList.FirstDisplayedScrollingRowIndex = m_runStep - 16;
+                            
                         }
                     }));
 
@@ -161,7 +149,6 @@ namespace MKB
                         {
                             // 更新状态
                             timerMain.Enabled     = false;
-                            buttonRun.Text        = buttonRun.Tag.ToString().Split(' ')[0];
                             progressBarMain.Value = 0;
 
                             this.WindowState = FormWindowState.Normal;       // 恢复当前窗口
@@ -184,349 +171,7 @@ namespace MKB
                 MessageBox.Show(ex.Message);
             }
         }
-
-        // -------------------------------------------------------------------------------- //
-        // ------------------------------------ Events ------------------------------------ //
-        // -------------------------------------------------------------------------------- //
-
-        /// <summary>
-        /// 单步 按钮事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonSingleStep_Click(object sender, EventArgs e)
-        {
-            try
-            {
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// 运行 按钮事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonRun_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 过期保护
-                if (m_isOutOfDate)
-                {
-                    return;
-                }
-
-                // 运行操作
-                if (buttonRun.Text == buttonRun.Tag.ToString().Split(' ')[0])
-                {
-                    // 提示切换英文输入法
-                    DialogResult dialogResult = MessageBox.Show("是否从当前行开始运行？\n\n" +
-                                                                "点击是，从当前行开始运行。\n" +
-                                                                "点击否，从第一行开始运行。\n" +
-                                                                "点击取消，退出运行。\n\n" +
-                                                                "警告：运行前，请切换至英文输入法！", 
-                                                                "警告", MessageBoxButtons.YesNoCancel);
-                    if (dialogResult == DialogResult.Cancel)
-                    {
-                        return;
-                    }
-
-                    // 最小化当前窗口
-                    if (checkBoxHide.Checked)
-                    {
-                        this.WindowState = FormWindowState.Minimized;
-                    }
-
-                    // 开始执行 dataGridViewCmdConfigList 的命令列表
-                    m_cmdConfigList.Clear();
-
-                    // 判断列表是否为空
-                    if (dataGridViewCmdConfigList.Rows.Count == 0)
-                    {
-                        return;
-                    }
-
-                    // 遍历命令列表
-                    foreach (DataGridViewRow row in dataGridViewCmdConfigList.Rows)
-                    {
-                        // 数据解析
-                        m_cmdConfigList.Add(new CmdConfig(row.Cells[0].Value.ToString(), row.Cells[1].Value.ToString(), row.Cells[2].Value.ToString(),
-                                                          row.Cells[3].Value.ToString(), row.Cells[4].Value.ToString(),
-                                                          row.Cells[5].Value.ToString().Split(' ')[0], row.Cells[5].Value.ToString().Split(' ')[1],
-                                                          row.Cells[6].Value.ToString()));
-
-                        // 执行操作，即使能定时器
-                        if (dialogResult == DialogResult.Yes)       // 从当前行开始运行
-                        {
-                            m_runStep = dataGridViewCmdConfigList.CurrentCell.RowIndex;
-                        }
-                        else                                        // 从第一行开始运行
-                        {
-                            m_runStep = 0;
-                        }
-                        m_runStatus       = 1;
-                        timerMain.Enabled = true;
-                    }
-
-                    // 更新状态
-                    buttonRun.Text = buttonRun.Tag.ToString().Split(' ')[1];
-                }
-                else if (buttonRun.Text == buttonRun.Tag.ToString().Split(' ')[1])
-                {
-                    // 关闭定时器，直接停止
-                    timerMain.Enabled = false;
-
-                    // 更新状态
-                    buttonRun.Text        = buttonRun.Tag.ToString().Split(' ')[0];
-                    progressBarMain.Value = 0;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// 新建 按钮事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonNew_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 获取当前选中的行，若没有，默认为 -1
-                int curRow = -1;
-                if (dataGridViewCmdConfigList.Rows.Count != 0)
-                {
-                    curRow = dataGridViewCmdConfigList.CurrentCell.RowIndex;
-                }
-
-                // 弹出命令配置窗口
-                CmdConfigForm cmdConfigForm = new CmdConfigForm();
-                if (cmdConfigForm.ShowDialog(this) == DialogResult.OK)
-                {
-                    // 这里会返回一个 CmdConfig 类型的变量，可以写到 dataGridViewCmdConfigList 中
-                    CmdConfigList_Insert(cmdConfigForm.m_cmdConfig, curRow);
-                    if (curRow != -1)
-                    {
-                        // 光标留在新建行
-                        dataGridViewCmdConfigList.CurrentCell = dataGridViewCmdConfigList.Rows[curRow + 1].Cells[dataGridViewCmdConfigList.CurrentCell.ColumnIndex];
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// 编辑 按钮事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonEdit_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 获取当前选中的行，若没有，直接返回
-                if (dataGridViewCmdConfigList.Rows.Count == 0)
-                {
-                    return;
-                }
-                int curRow = dataGridViewCmdConfigList.CurrentCell.RowIndex;
-                
-                // 弹出命令配置窗口
-                CmdConfigForm cmdConfigForm = new CmdConfigForm(CmdConfigList_Get(curRow));
-                if (cmdConfigForm.ShowDialog(this) == DialogResult.OK)
-                {
-                    // 这里会返回一个 CmdConfig 类型的变量，可以写到 dataGridViewCmdConfigList 中
-                    CmdConfigList_Set(cmdConfigForm.m_cmdConfig, curRow);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
         
-        /// <summary>
-        /// 双击 Cell 进入编辑界面
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dataGridViewCmdConfigList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                buttonEdit_Click(null, null);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// 上移 按钮事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonMoveUp_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 获取当前选中的行，若没有，直接返回
-                if (dataGridViewCmdConfigList.Rows.Count == 0)
-                {
-                    return;
-                }
-                int curRow = dataGridViewCmdConfigList.CurrentCell.RowIndex;
-
-                // 判断往上是否还有一行
-                if (curRow - 1 < 0)
-                {
-                    return;
-                }
-
-                // 交换行
-                CmdConfigList_Exchange(curRow - 1, curRow);
-
-                // 光标留在当前行
-                dataGridViewCmdConfigList.CurrentCell = dataGridViewCmdConfigList.Rows[curRow - 1].Cells[dataGridViewCmdConfigList.CurrentCell.ColumnIndex];
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// 下移 按钮事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonMoveDown_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 获取当前选中的行，若没有，直接返回
-                if (dataGridViewCmdConfigList.Rows.Count == 0)
-                {
-                    return;
-                }
-                int curRow = dataGridViewCmdConfigList.CurrentCell.RowIndex;
-
-                // 判断往下是否还有一行
-                if (curRow + 1 > dataGridViewCmdConfigList.Rows.Count - 1)
-                {
-                    return;
-                }
-
-                // 交换行
-                CmdConfigList_Exchange(curRow, curRow + 1);
-
-                // 光标留在当前行
-                dataGridViewCmdConfigList.CurrentCell = dataGridViewCmdConfigList.Rows[curRow + 1].Cells[dataGridViewCmdConfigList.CurrentCell.ColumnIndex];
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// 删除 按钮事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonDel_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (dataGridViewCmdConfigList.Rows.Count != 0)
-                {
-                    CmdConfigList_Delete(dataGridViewCmdConfigList.CurrentRow.Index);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// 导出 按钮事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonExport_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 导出数据
-                ExportExcel(dataGridViewCmdConfigList);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// 导入 按钮事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonImport_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // 导入数据
-                List<CmdConfig> cmdConfigList = ImportExcel();
-                if (cmdConfigList == null || cmdConfigList.Count == 0)
-                {
-                    return;
-                }
-
-                // 更新 dataGridViewCmdConfigList
-                dataGridViewCmdConfigList.Rows.Clear();
-                foreach (CmdConfig cmdConfig in cmdConfigList)
-                {
-                    CmdConfigList_Add(cmdConfig);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// 退出 按钮事件
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void buttonExit_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
         // -------------------------------------------------------------------------------- //
         // ----------------------------- menuStripMain Events ----------------------------- //
         // -------------------------------------------------------------------------------- //
@@ -540,7 +185,7 @@ namespace MKB
         {
             try
             {
-                buttonImport_Click(null, null);
+                
             }
             catch (Exception ex)
             {
@@ -557,7 +202,7 @@ namespace MKB
         {
             try
             {
-                buttonExport_Click(null, null);
+                
             }
             catch (Exception ex)
             {
@@ -574,7 +219,7 @@ namespace MKB
         {
             try
             {
-                buttonExit_Click(null, null);
+                this.Close();
             }
             catch (Exception ex)
             {
@@ -682,362 +327,6 @@ namespace MKB
         }
 
         // -------------------------------------------------------------------------------- //
-        // ---------------------- dataGridViewCmdConfigList 相关操作 ----------------------- //
-        // -------------------------------------------------------------------------------- //
-
-        /// <summary>
-        /// 添加行
-        /// </summary>
-        /// <param name="cmdConfig"></param>
-        public void CmdConfigList_Add(CmdConfig cmdConfig)
-        {
-            dataGridViewCmdConfigList.Rows.Add(cmdConfig.Decompose());
-        }
-
-        /// <summary>
-        /// 插入行
-        /// </summary>
-        /// <param name="cmdConfig"></param>
-        /// <param name="index"></param>
-        public void CmdConfigList_Insert(CmdConfig cmdConfig, int index)
-        {
-            dataGridViewCmdConfigList.Rows.Insert(index+1, cmdConfig.Decompose());
-        }
-
-        /// <summary>
-        /// 删除行
-        /// </summary>
-        /// <param name="index"></param>
-        public void CmdConfigList_Delete(int index)
-        {
-            dataGridViewCmdConfigList.Rows.RemoveAt(index);
-        }
-
-        /// <summary>
-        /// 获取行
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        public CmdConfig CmdConfigList_Get(int index)
-        {
-            CmdConfig cmdConfig = new CmdConfig();
-
-            cmdConfig.m_type  = dataGridViewCmdConfigList.Rows[index].Cells[0].Value.ToString();
-            cmdConfig.m_posX  = dataGridViewCmdConfigList.Rows[index].Cells[1].Value.ToString();
-            cmdConfig.m_posY  = dataGridViewCmdConfigList.Rows[index].Cells[2].Value.ToString();
-            cmdConfig.m_op    = dataGridViewCmdConfigList.Rows[index].Cells[3].Value.ToString();
-            cmdConfig.m_text  = dataGridViewCmdConfigList.Rows[index].Cells[4].Value.ToString();
-            cmdConfig.m_time  = dataGridViewCmdConfigList.Rows[index].Cells[5].Value.ToString().Split(' ')[0];
-            cmdConfig.m_unit  = dataGridViewCmdConfigList.Rows[index].Cells[5].Value.ToString().Split(' ')[1];
-            cmdConfig.m_descr = dataGridViewCmdConfigList.Rows[index].Cells[6].Value.ToString();
-
-            return (cmdConfig);
-        }
-
-        /// <summary>
-        /// 设置行
-        /// </summary>
-        /// <param name="cmdConfig"></param>
-        /// <param name="index"></param>
-        public void CmdConfigList_Set(CmdConfig cmdConfig, int index)
-        {
-            dataGridViewCmdConfigList.Rows[index].Cells[0].Value = cmdConfig.m_type;
-            dataGridViewCmdConfigList.Rows[index].Cells[1].Value = cmdConfig.m_posX;
-            dataGridViewCmdConfigList.Rows[index].Cells[2].Value = cmdConfig.m_posY;
-            dataGridViewCmdConfigList.Rows[index].Cells[3].Value = cmdConfig.m_op;
-            dataGridViewCmdConfigList.Rows[index].Cells[4].Value = cmdConfig.m_text;
-            dataGridViewCmdConfigList.Rows[index].Cells[5].Value = string.Concat(cmdConfig.m_time, " ", cmdConfig.m_unit);
-            dataGridViewCmdConfigList.Rows[index].Cells[6].Value = cmdConfig.m_descr;
-        }
-
-        /// <summary>
-        /// 交换行
-        /// </summary>
-        /// <param name="index1"></param>
-        /// <param name="index2"></param>
-        public void CmdConfigList_Exchange(int index1, int index2)
-        {
-            // 确保 index1 < index2
-            if (index1 < index2)
-            {
-                // 获取 row1, row2 行信息
-                DataGridViewRow row1 = dataGridViewCmdConfigList.Rows[index1];
-                DataGridViewRow row2 = dataGridViewCmdConfigList.Rows[index2];
-
-                // 删除 row1, row2 行信息
-                dataGridViewCmdConfigList.Rows.RemoveAt(index1);
-                dataGridViewCmdConfigList.Rows.RemoveAt(index2 - 1);
-
-                // 将 row2 插入至 index1 位置
-                dataGridViewCmdConfigList.Rows.Insert(index1, row2);
-
-                // 将 row1 插入至 index2 位置
-                dataGridViewCmdConfigList.Rows.Insert(index2, row1);
-            }
-
-        }
-
-        // -------------------------------------------------------------------------------- //
-        // --------------------------------- 数据导入/导出 --------------------------------- //
-        // -------------------------------------------------------------------------------- //
-
-        /// <summary>
-        /// 数据导出
-        /// </summary>
-        /// <param name="dataGridView"></param>
-        public void ExportExcel(DataGridView dataGridView)
-        {
-            try
-            {
-                // 保存 excel 文件对话框
-                string fileName = "";
-                SaveFileDialog saveFileDialog = new SaveFileDialog();
-                saveFileDialog.Filter                              = "Excel files (*.xls)|*.xls";
-                saveFileDialog.CheckFileExists                     = false;
-                saveFileDialog.CheckPathExists                     = false;
-                saveFileDialog.FilterIndex                         = 0;
-                saveFileDialog.CreatePrompt                        = true;
-                saveFileDialog.Title                               = "保存为 Excel 文件";
-                saveFileDialog.FileName                            = "CmdConfigList";
-                saveFileDialog.InitialDirectory                    = System.Environment.CurrentDirectory;
-                if (saveFileDialog.ShowDialog() == DialogResult.Cancel)
-                {
-                    return;
-                }
-                fileName = saveFileDialog.FileName;
-
-                // 添加部分信息
-                XlsDocument xls                    = new XlsDocument();
-                xls.SummaryInformation.LastSavedBy = "ZpRoc";                                           // 填加 xls 文件最后保存者信息
-                xls.SummaryInformation.Comments    = "ZpRoc";                                           // 填加 xls 文件作者信息
-                Worksheet sheet                    = xls.Workbook.Worksheets.Add("CmdConfigList");      // 状态栏标题名称
-                Cells cells                        = sheet.Cells;
-
-                // ******************** 数据格式 ******************** //
-                // 字符串：居中对齐
-                XF xfStr = xls.NewXF();
-                xfStr.HorizontalAlignment = HorizontalAlignments.Centered;
-                xfStr.VerticalAlignment = VerticalAlignments.Centered;
-
-                // 时间格式
-                XF xfDate = xls.NewXF();
-                xfDate.HorizontalAlignment = HorizontalAlignments.Centered;
-                xfDate.VerticalAlignment = VerticalAlignments.Centered;
-                xfDate.Format = "yyyy-MM-dd HH:mm:ss";
-
-                // 测量数据：居中对齐，五位整数
-                XF xfInt5 = xls.NewXF();
-                xfInt5.HorizontalAlignment = HorizontalAlignments.Centered;
-                xfInt5.VerticalAlignment = VerticalAlignments.Centered;
-                xfInt5.Format = "00000";
-
-                // 测量数据：居中对齐，保留一位小数
-                XF xfDecimal1 = xls.NewXF();
-                xfDecimal1.HorizontalAlignment = HorizontalAlignments.Centered;
-                xfDecimal1.VerticalAlignment = VerticalAlignments.Centered;
-                xfDecimal1.Format = "0.0";
-
-                // 测量数据：居中对齐，保留两位小数
-                XF xfDecimal2 = xls.NewXF();
-                xfDecimal2.HorizontalAlignment = HorizontalAlignments.Centered;
-                xfDecimal2.VerticalAlignment = VerticalAlignments.Centered;
-                xfDecimal2.Format = "0.00";
-
-                // cells 的 行列索引 从 1 开始
-
-                // 第一行 列标题
-                for (int i = 0; i < dataGridView.Columns.Count; i++)
-                {
-                    if (dataGridView.Columns[i].Visible == true)
-                    {
-                        Cell cell = cells.Add(1, i + 1, dataGridView.Columns[i].HeaderText, xfStr);
-                        cell.Font.Bold = true;
-                    }
-                }
-
-                // 第二行以后，CmdCOnfigList
-                for (int i = 0; i < dataGridView.Rows.Count; i++)
-                {
-                    for (int j = 0; j < dataGridView.Columns.Count; j++)
-                    {
-                        if (dataGridView.Columns[j].Visible == true)
-                        {
-                            Cell cell = cells.Add(i + 2, j + 1, dataGridView.Rows[i].Cells[j].Value.ToString(), xfStr);
-                            cell.Font.Bold = false;
-                        }
-                    }
-                }
-
-                // 保存数据
-                if (System.IO.File.Exists(fileName))
-                {
-                    System.IO.File.Delete(fileName);
-                }
-                xls.FileName = fileName;
-                xls.Save();
-
-                // 完成导出
-                MessageBox.Show("导出完成！");
-            }
-            catch (Exception ex)
-            {
-                Trace.WriteLine(DateTime.Now.ToString("yyyy-MM-dd <HH:mm:ss:ffff>") + "\t"
-                                + "MainForm" + "\t" + "\n" + "ExportExcel catch:" + ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// 数据导入
-        /// </summary>
-        /// <returns></returns>
-        public List<CmdConfig> ImportExcel()
-        {
-            try
-            {
-                // 提醒
-                MessageBox.Show("导入前，请打开 Excel 文件，选中全部列，双击列间的空隙，使其自适应列宽，否则可能造成导入失败！");
-
-                // 选择 excel 文件对话框
-                OpenFileDialog openFileDialog = new OpenFileDialog();           
-                openFileDialog.Filter           = "Excel files (*.xls)|*.xls";
-                openFileDialog.InitialDirectory = System.Environment.CurrentDirectory;
-
-                if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    // 获取文件路径
-                    string filePath = openFileDialog.FileName.ToString();
-                    if (string.IsNullOrEmpty(filePath))
-                    {
-                        return (null);
-                    }
-
-                    // 文件连接
-                    string strConn = "";
-                    if (System.IO.Path.GetExtension(filePath) == ".xls")
-                    {
-                        strConn = string.Format("Provider=Microsoft.Jet.OLEDB.4.0; Data Source={0}; Extended Properties=Excel 8.0;", filePath);
-                    }
-                    else
-                    {
-                        strConn = string.Format("Provider=Microsoft.ACE.OLEDB.12.0; Data Source={0}; Extended Properties=Excel 8.0;", filePath);
-                    }
-
-                    // 读取数据
-                    DataSet ds = new DataSet();
-                    using (var oledbConn = new OleDbConnection(strConn))
-                    {
-                        oledbConn.Open();
-                        var sheetName = oledbConn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new[] { null, null, null, "Table" });
-                        var sheet = new string[sheetName.Rows.Count];
-                        for (int i = 0, j = sheetName.Rows.Count; i < j; i++)
-                        {
-                            sheet[i] = sheetName.Rows[i]["TABLE_NAME"].ToString();
-                        }
-                        var adapter = new OleDbDataAdapter(string.Format("select * from [{0}]", sheet[0]), oledbConn);
-                        adapter.Fill(ds);
-                    }
-
-                    // 解析数据 ds.Tables[0]
-                    List<CmdConfig> cmdConfigList = new List<CmdConfig>();
-
-                    foreach (DataRow dr in ds.Tables[0].Rows)
-                    {
-                        cmdConfigList.Add(new CmdConfig(dr[0].ToString(), dr[1].ToString(), dr[2].ToString(), dr[3].ToString(), dr[4].ToString(), 
-                                                        dr[5].ToString().Split(' ')[0], dr[5].ToString().Split(' ')[1], dr[6].ToString()));
-                    }
-
-                    // 返回
-                    return (cmdConfigList);
-                }
-                else
-                {
-                    return (null);
-                }
-            }
-            catch (Exception ex)
-            {
-                Trace.WriteLine(DateTime.Now.ToString("yyyy-MM-dd <HH:mm:ss:ffff>") + "\t"
-                                + "MainForm" + "\t" + "\n" + "ImportExcel catch:" + ex.Message);
-                return (null);
-            }
-        }
-
-        // -------------------------------------------------------------------------------- //
-        // --------------------------------- 软件过期保护 ---------------------------------- //
-        // -------------------------------------------------------------------------------- //
-
-        /// <summary>
-        /// 获取过期时间
-        /// </summary>
-        /// <returns></returns>
-        public string GetOverTime()
-        {
-            // 根据注册码，获取时间
-            string keyUrl = @"key.txt";
-            if (File.Exists(keyUrl))
-            {
-                SecretKey sk = new SecretKey();
-                return sk.Decrypt(Encryption.MachineCode.GetMachineCode(), File.ReadAllText(keyUrl));
-            }
-            else
-            {
-                //MessageBox.Show("注册码文件 (key.txt) 不存在，应放置于可执行文件同级目录下！");
-                return null;
-            }
-        }
-
-        /// <summary>
-        /// 判断是否过期
-        /// </summary>
-        /// <returns></returns>
-        public bool IsOutOfDate(string overtime)
-        {
-            try
-            {
-                if (!string.IsNullOrWhiteSpace(overtime))
-                {
-                    DateTime dt = DateTime.ParseExact(overtime, "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
-                    if (dt > DateTime.Now)
-                    {
-                        //MessageBox.Show(string.Format("试用期还剩 {0} 天！", resDays));
-                        return (false);
-                    }
-                    else
-                    {
-                        //MessageBox.Show("试用期已过，请联系码农！");
-                        return (true);
-                    }
-                }
-                else
-                {
-                    //MessageBox.Show("注册码有误，请联系码农！");
-                    return (true);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("注册码有误，请联系码农！");
-                return (true);
-            }
-        }
-
-        // -------------------------------------------------------------------------------- //
-        // ------------------------------------- 测试 ------------------------------------- //
-        // -------------------------------------------------------------------------------- //
-
-        /// <summary>
-        /// 标题 双击事件 (测试用)
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void labelTitle_DoubleClick(object sender, EventArgs e)
-        {
-            
-        }
-
-
-
-        // -------------------------------------------------------------------------------- //
         // ------------------------------ 新功能测试，右键菜单栏 ------------------------------ //
         // -------------------------------------------------------------------------------- //
 
@@ -1080,12 +369,32 @@ namespace MKB
                 {
                     toolStripMenuItemMoveDn_Click(null, null);
                 }
+                // 运行 F5
+                else if (e.KeyCode == Keys.F5)
+                {
+                    toolStripMenuItemRun_Click(null, null);
+                }
+                // 停止 Shift+F5
+                else if (e.Shift && e.KeyCode == Keys.F5)
+                {
+                    toolStripMenuItemStop_Click(null, null);
+                }
+                // 从这运行 F6
+                else if (e.KeyCode == Keys.F6)
+                {
+                    toolStripMenuItemRunHere_Click(null, null);
+                }
+                // 单步运行 F10
+                else if (e.KeyCode == Keys.F10)
+                {
+                    toolStripMenuItemRunStep_Click(null, null);
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-}
+        }
 
         /// <summary>
         /// 新建 命令
@@ -1282,7 +591,7 @@ namespace MKB
         }
 
         /// <summary>
-        /// 从头运行
+        /// 运行
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1290,7 +599,48 @@ namespace MKB
         {
             try
             {
+                // 过期保护
+                if (m_isOutOfDate)
+                    MessageBox.Show("无权限，请先激活软件！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+                // 提示切换英文输入法
+                if (MessageBox.Show("警告：运行前，请切换至英文输入法！", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel)
+                {
+                    return;
+                }
+
+                // 最小化当前窗口
+                this.WindowState = FormWindowState.Minimized;
+
+                // 遍历 treeViewMain，解析数据至 m_cmdConfigList
+
+
+
+                // 初始化状态变量，并使能定时器
+                m_runStep = 0;              // 从头运行
+                m_runStatus = 1;
+                timerMain.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// 停止
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemStop_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // 关闭定时器，直接停止
+                timerMain.Enabled = false;
+
+                // 更新状态
+                progressBarMain.Value = 0;
             }
             catch (Exception ex)
             {
@@ -1307,7 +657,27 @@ namespace MKB
         {
             try
             {
+                // 过期保护
+                if (m_isOutOfDate)
+                    MessageBox.Show("无权限，请先激活软件！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
+                // 提示切换英文输入法
+                if (MessageBox.Show("警告：运行前，请切换至英文输入法！", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel)
+                {
+                    return;
+                }
+
+                // 最小化当前窗口
+                this.WindowState = FormWindowState.Minimized;
+
+                // 遍历 treeViewMain，解析数据至 m_cmdConfigList
+
+
+
+                // 初始化状态变量，并使能定时器
+                m_runStep = 0;              // 从头运行
+                m_runStatus = 1;
+                timerMain.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -1324,12 +694,101 @@ namespace MKB
         {
             try
             {
+                // 提示切换英文输入法
+                if (MessageBox.Show("警告：运行前，请切换至英文输入法！", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.Cancel)
+                {
+                    return;
+                }
 
+                // 最小化当前窗口
+                this.WindowState = FormWindowState.Minimized;
+
+                // treeViewMain.SelectedNode，解析数据至 m_cmdConfigList
+
+
+
+                // 初始化状态变量，并使能定时器
+                m_runStep = 0;              // 从头运行
+                m_runStatus = 1;
+                timerMain.Enabled = true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        // -------------------------------------------------------------------------------- //
+        // --------------------------------- 软件过期保护 ---------------------------------- //
+        // -------------------------------------------------------------------------------- //
+
+        /// <summary>
+        /// 获取过期时间
+        /// </summary>
+        /// <returns></returns>
+        public string GetOverTime()
+        {
+            // 根据注册码，获取时间
+            string keyUrl = @"key.txt";
+            if (File.Exists(keyUrl))
+            {
+                SecretKey sk = new SecretKey();
+                return sk.Decrypt(Encryption.MachineCode.GetMachineCode(), File.ReadAllText(keyUrl));
+            }
+            else
+            {
+                //MessageBox.Show("注册码文件 (key.txt) 不存在，应放置于可执行文件同级目录下！");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 判断是否过期
+        /// </summary>
+        /// <returns></returns>
+        public bool IsOutOfDate(string overtime)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(overtime))
+                {
+                    DateTime dt = DateTime.ParseExact(overtime, "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
+                    if (dt > DateTime.Now)
+                    {
+                        //MessageBox.Show(string.Format("试用期还剩 {0} 天！", resDays));
+                        return (false);
+                    }
+                    else
+                    {
+                        //MessageBox.Show("试用期已过，请联系码农！");
+                        return (true);
+                    }
+                }
+                else
+                {
+                    //MessageBox.Show("注册码有误，请联系码农！");
+                    return (true);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("注册码有误，请联系码农！");
+                return (true);
+            }
+        }
+
+        // -------------------------------------------------------------------------------- //
+        // ------------------------------------- 测试 ------------------------------------- //
+        // -------------------------------------------------------------------------------- //
+
+        /// <summary>
+        /// 标题 双击事件 (测试用)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void labelTitle_DoubleClick(object sender, EventArgs e)
+        {
+            
         }
     }
 }

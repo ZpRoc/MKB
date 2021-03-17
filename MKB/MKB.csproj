@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataHandle\DataIO.cs" />
     <Compile Include="DataHandle\GrpConfig.cs" />
     <Compile Include="DataHandle\TreeViewCtrl.cs" />
     <Compile Include="Encryption\SecretKey.cs" />
