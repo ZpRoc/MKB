@@ -14,8 +14,8 @@ namespace MKB
     public partial class MainForm : Form
     {
         // 版本
-        string m_dateVersion = "20210314";
-        string m_pushVersion = "V1.2.2";
+        string m_dateVersion = "20210317";
+        string m_pushVersion = "V2.0.0";
 
         // 是否过期
         string m_overtime  = string.Empty;
@@ -44,7 +44,7 @@ namespace MKB
         }
 
         // -------------------------------------------------------------------------------- //
-        // -------------------------------------------------------------------------------- //
+        // ----------------------------------- 运行主体 ------------------------------------ //
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
@@ -272,7 +272,7 @@ namespace MKB
         }
 
         /// <summary>
-        /// 获取注册码
+        /// 菜单栏 获取注册码
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -327,11 +327,11 @@ namespace MKB
         }
 
         // -------------------------------------------------------------------------------- //
-        // ------------------------------ 新功能测试，右键菜单栏 ------------------------------ //
+        // ------------------------- contextMenuStripMain Events -------------------------- //
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
-        /// 快捷键
+        /// 右键菜单栏 快捷键
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -349,8 +349,8 @@ namespace MKB
                 {
                     toolStripMenuItemNewGrp_Click(null, null);
                 }
-                // 编辑 命令/命令组 Ctrl+E
-                else if (e.Control && e.KeyCode == Keys.E)
+                // 编辑 命令/命令组 Ctrl+E 或者 Enter
+                else if ((e.Control && e.KeyCode == Keys.E) || (e.KeyCode == Keys.Enter))
                 {
                     toolStripMenuItemEdit_Click(null, null);
                 }
@@ -370,12 +370,12 @@ namespace MKB
                     toolStripMenuItemDel_Click(null, null);
                 }
                 // 上移 命令/命令组 Ctrl+Up
-                else if (e.Shift && e.KeyCode == Keys.Up)
+                else if (e.Control && e.KeyCode == Keys.Up)
                 {
                     toolStripMenuItemMoveUp_Click(null, null);
                 }
                 // 下移 命令/命令组 Ctrl+Dn
-                else if (e.Shift && e.KeyCode == Keys.Down)
+                else if (e.Control && e.KeyCode == Keys.Down)
                 {
                     toolStripMenuItemMoveDn_Click(null, null);
                 }
@@ -384,8 +384,8 @@ namespace MKB
                 {
                     toolStripMenuItemRun_Click(null, null);
                 }
-                // 停止 Shift+F5
-                else if (e.Shift && e.KeyCode == Keys.F5)
+                // 停止 Ctrl+F5
+                else if (e.Control && e.KeyCode == Keys.F5)
                 {
                     toolStripMenuItemStop_Click(null, null);
                 }
@@ -407,7 +407,7 @@ namespace MKB
         }
 
         /// <summary>
-        /// 新建 命令
+        /// 右键菜单栏 新命令
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -418,7 +418,7 @@ namespace MKB
                 // 添加 CmdNode 的时候，必须选中某一个 GrpNode
                 if (treeViewMain.SelectedNode == null)
                 {
-                    MessageBox.Show("仅允许在命令组下添加命令，请选中命令组节点或命令节点后再添加！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("请选中命令组节点或命令节点后再添加！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
@@ -441,7 +441,7 @@ namespace MKB
         }
 
         /// <summary>
-        /// 新建 命令组
+        /// 右键菜单栏 新建组
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -450,11 +450,11 @@ namespace MKB
             try
             {
                 // 添加 GrpNode 的时候，必须处于根目录状态
-                if (treeViewMain.SelectedNode != null && treeViewMain.SelectedNode.Level != 0)
-                {
-                    MessageBox.Show("仅允许在根目录下添加命令组，请选中根目录节点后再添加！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                //if (treeViewMain.SelectedNode != null && treeViewMain.SelectedNode.Level != 0)
+                //{
+                //    MessageBox.Show("仅允许在根目录下添加命令组，请选中根目录节点后再添加！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //    return;
+                //}
 
                 // 弹出命令组配置窗口，添加新命令组
                 GrpConfigForm grpConfigForm = new GrpConfigForm();
@@ -475,7 +475,7 @@ namespace MKB
         }
 
         /// <summary>
-        /// 编辑 命令/命令组
+        /// 右键菜单栏 编辑
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -493,7 +493,7 @@ namespace MKB
                 // 弹出 命令组 配置窗口
                 if (treeViewMain.SelectedNode.Level == 0)
                 {
-                    GrpConfigForm grpConfigForm = new GrpConfigForm((GrpConfig)treeViewMain.SelectedNode.Tag);
+                    GrpConfigForm grpConfigForm = new GrpConfigForm((GrpConfig)treeViewMain.SelectedNode.Tag, treeViewMain.SelectedNode);
                     if (grpConfigForm.ShowDialog(this) == DialogResult.OK)
                     {
                         string str = m_treeViewCtrl.EditGrp(treeViewMain, grpConfigForm.m_grpConfig);
@@ -526,7 +526,7 @@ namespace MKB
         }
 
         /// <summary>
-        /// 复制 命令/命令组
+        /// 右键菜单栏 复制
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -541,15 +541,12 @@ namespace MKB
                     return;
                 }
 
-                // 复制 命令组
-                if (treeViewMain.SelectedNode.Level == 0)
+                // 复制 命令/命令组
+                string str = m_treeViewCtrl.CopyNode(treeViewMain);
+                if (!string.IsNullOrWhiteSpace(str))
                 {
-                    
-                }
-                // 复制 命令
-                else if (treeViewMain.SelectedNode.Level == 1)
-                {
-                    
+                    MessageBox.Show(str, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
             catch (Exception ex)
@@ -559,7 +556,7 @@ namespace MKB
         }
 
         /// <summary>
-        /// 粘贴 命令/命令组
+        /// 右键菜单栏 粘贴
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -570,19 +567,16 @@ namespace MKB
                 // 必须选中某一个 Node
                 if (treeViewMain.SelectedNode == null)
                 {
-                    MessageBox.Show("请选中所要编辑的命令组节点或命令节点！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("请选中所要粘贴的命令组节点或命令节点的位置！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                // 粘贴 命令组
-                if (treeViewMain.SelectedNode.Level == 0)
+                // 粘贴 命令/命令组
+                string str = m_treeViewCtrl.PasteNode(treeViewMain);
+                if (!string.IsNullOrWhiteSpace(str))
                 {
-
-                }
-                // 粘贴 命令
-                else if (treeViewMain.SelectedNode.Level == 1)
-                {
-
+                    MessageBox.Show(str, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
             }
             catch (Exception ex)
@@ -592,7 +586,7 @@ namespace MKB
         }
 
         /// <summary>
-        /// 删除 命令/命令组
+        /// 右键菜单栏 删除
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -608,7 +602,12 @@ namespace MKB
                 }
 
                 // 删除节点
-                m_treeViewCtrl.DeleteNode(treeViewMain);
+                string str = m_treeViewCtrl.DeleteNode(treeViewMain);
+                if (!string.IsNullOrWhiteSpace(str))
+                {
+                    MessageBox.Show(str, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -617,7 +616,7 @@ namespace MKB
         }
 
         /// <summary>
-        /// 上移 命令/命令组
+        /// 右键菜单栏 上移
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -633,7 +632,12 @@ namespace MKB
                 }
 
                 // 上移节点
-                m_treeViewCtrl.MoveUpNode(treeViewMain);
+                string str = m_treeViewCtrl.MoveUpNode(treeViewMain);
+                if (!string.IsNullOrWhiteSpace(str))
+                {
+                    MessageBox.Show(str, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -642,7 +646,7 @@ namespace MKB
         }
 
         /// <summary>
-        /// 下移 命令/命令组
+        /// 右键菜单栏 下移
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -658,7 +662,12 @@ namespace MKB
                 }
 
                 // 下移节点
-                m_treeViewCtrl.MoveDnNode(treeViewMain);
+                string str = m_treeViewCtrl.MoveDnNode(treeViewMain);
+                if (!string.IsNullOrWhiteSpace(str))
+                {
+                    MessageBox.Show(str, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -667,7 +676,7 @@ namespace MKB
         }
 
         /// <summary>
-        /// 运行
+        /// 右键菜单栏 运行
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -704,7 +713,7 @@ namespace MKB
         }
 
         /// <summary>
-        /// 停止
+        /// 右键菜单栏 停止
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -725,7 +734,7 @@ namespace MKB
         }
 
         /// <summary>
-        /// 从这运行
+        /// 右键菜单栏 从这运行
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -762,7 +771,7 @@ namespace MKB
         }
 
         /// <summary>
-        /// 单步运行
+        /// 右键菜单栏 单步运行
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -787,6 +796,38 @@ namespace MKB
                 m_runStep = 0;              // 从头运行
                 m_runStatus = 1;
                 timerMain.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // -------------------------------------------------------------------------------- //
+        // ----------------------------- treeViewMain Events ------------------------------ //
+        // -------------------------------------------------------------------------------- //
+
+        /// <summary>
+        /// treeViewMain 节点鼠标双击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void treeViewMain_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            try
+            {
+                // 判断点击位置是否在文字内
+                if (   e.X < treeViewMain.SelectedNode.Bounds.Left || e.X > treeViewMain.SelectedNode.Bounds.Right
+                    || e.Y < treeViewMain.SelectedNode.Bounds.Top || e.Y > treeViewMain.SelectedNode.Bounds.Bottom)
+                {
+                    return;
+                }
+
+                // 节点展开控制 (由于双击会自动展开节点，这边利用代码进行反置)
+                treeViewMain.SelectedNode.Toggle();
+
+                // 调用编辑事件
+                toolStripMenuItemEdit_Click(null, null);
             }
             catch (Exception ex)
             {
@@ -866,7 +907,5 @@ namespace MKB
         {
             
         }
-
-        
     }
 }

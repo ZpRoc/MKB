@@ -35,9 +35,9 @@ namespace MKB.DataHandle
             treeNode.Text     = "C00 " + cmdConfig.m_descr;
             treeNode.Tag      = cmdConfig;
 
-            if (treeView.SelectedNode.Level == 1)
+            if (treeView.SelectedNode.Level == 1)           // 选中的是命令节点
                 treeView.SelectedNode.Parent.Nodes.Insert(treeView.SelectedNode.Index + 1, treeNode);
-            else if (treeView.SelectedNode.Level == 0)
+            else if (treeView.SelectedNode.Level == 0)      // 选中的是命令组节点
                 treeView.SelectedNode.Nodes.Add(treeNode);
 
             // 将新节点设置为选中状态
@@ -62,9 +62,16 @@ namespace MKB.DataHandle
             treeNode.Tag      = grpConfig;
 
             if (treeView.SelectedNode != null)
-                treeView.Nodes.Insert(treeView.SelectedNode.Index + 1, treeNode);
+            {
+                if (treeView.SelectedNode.Level == 1)           // 选中的是命令节点
+                    treeView.SelectedNode.Parent.TreeView.Nodes.Insert(treeView.SelectedNode.Parent.Index + 1, treeNode);
+                else if (treeView.SelectedNode.Level == 0)      // 选中的是命令组节点
+                    treeView.SelectedNode.TreeView.Nodes.Insert(treeView.SelectedNode.Index + 1, treeNode);
+            }
             else
+            {
                 treeView.Nodes.Add(treeNode);
+            }
 
             // 将新节点设置为选中状态
             treeView.SelectedNode = treeNode;
@@ -103,6 +110,56 @@ namespace MKB.DataHandle
             treeView.SelectedNode.Tag = grpConfig;
 
             // 返回
+            return null;
+        }
+
+        /// <summary>
+        /// 复制 命令/命令组 节点
+        /// </summary>
+        /// <param name="treeView"></param>
+        /// <returns></returns>
+        public string CopyNode(TreeView treeView)
+        {
+            // 复制节点
+            treeView.Tag = treeView.SelectedNode;
+
+            // 返回
+            return null;
+        }
+
+        /// <summary>
+        /// 粘贴 命令/命令组 节点
+        /// </summary>
+        /// <param name="treeView"></param>
+        /// <returns></returns>
+        public string PasteNode(TreeView treeView)
+        {
+            // 确保已经复制过节点
+            if (treeView.Tag == null)
+                return "节点未复制！";
+
+            // 确保节点一致
+            if (treeView.SelectedNode.Level != ((TreeNode)treeView.Tag).Level)
+            {
+                return "当前选中节点与所复制节点的级别不一致！";
+            }
+
+            // 粘贴 命令/命令组
+            TreeNode newNode = (TreeNode)((TreeNode)treeView.Tag).Clone();
+            if (treeView.SelectedNode.Level == 1)
+            {
+                treeView.SelectedNode.Parent.Nodes.Insert(treeView.SelectedNode.Index + 1, newNode);
+            }
+            else if (treeView.SelectedNode.Level == 0)
+            {
+                treeView.SelectedNode.TreeView.Nodes.Insert(treeView.SelectedNode.Index + 1, newNode);
+            }
+
+            // 将新节点设置为选中状态
+            treeView.SelectedNode = newNode;
+
+            // 刷新节点文本，并返回
+            RefreshText(treeView);
             return null;
         }
 

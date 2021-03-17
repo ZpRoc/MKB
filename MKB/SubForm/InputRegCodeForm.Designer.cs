@@ -86,10 +86,16 @@
             this.Controls.Add(this.textBoxRegCode);
             this.Controls.Add(this.labelInput);
             this.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 12F);
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(422, 220);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(422, 220);
             this.Name = "InputRegCodeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "请输入注册码";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.InputRegCodeForm_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

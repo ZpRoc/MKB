@@ -153,10 +153,16 @@
             this.Controls.Add(this.textBoxCode);
             this.Controls.Add(this.labelCode);
             this.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 12F);
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.MaximizeBox = false;
+            this.MaximumSize = new System.Drawing.Size(421, 394);
+            this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(421, 394);
             this.Name = "RegisterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "软件注册窗口";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.RegisterForm_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

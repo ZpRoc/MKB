@@ -171,15 +171,6 @@
     <None Include="ico\ZpRoc.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ico\Delete.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ico\Up.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ico\Down.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="ico\about.png" />
   </ItemGroup>
   <ItemGroup>
@@ -210,9 +201,6 @@
     <None Include="ico\key.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ico\lock.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="ico\move_down.png" />
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +226,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ico\locked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\minus.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

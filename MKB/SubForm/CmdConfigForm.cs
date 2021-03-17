@@ -309,6 +309,11 @@ namespace MKB.SubForm
                         buttonOK_Click(null, null);
                     }
                 }
+                // Esc 直接关闭窗口
+                else if (e.KeyCode == Keys.Escape)
+                {
+                    buttonCancel_Click(null, null);
+                }
             }
             catch (Exception ex)
             {

@@ -61,5 +61,31 @@ namespace MKB.SubForm
                 MessageBox.Show(ex.Message);
             }
         }
+
+        /// <summary>
+        /// 窗体快捷键事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AboutForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                // 回车按键，直接点击确定
+                if (e.KeyCode == Keys.Enter)
+                {
+                    buttonOK_Click(null, null);
+                }
+                // Esc 直接关闭窗口
+                else if (e.KeyCode == Keys.Escape)
+                {
+                    buttonCancel_Click(null, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
