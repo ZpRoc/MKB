@@ -130,9 +130,6 @@
   <data name="run_here" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ico\run_here.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="export" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ico\export.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="import" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ico\import.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -141,6 +138,9 @@
   </data>
   <data name="delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ico\delete.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="group" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ico\group.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="move_up" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ico\move_up.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -154,6 +154,9 @@
   <data name="edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ico\edit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="minus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ico\minus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="run" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ico\run.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -163,8 +166,8 @@
   <data name="locked" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ico\locked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="group" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ico\group.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="export" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ico\export.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="stop" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ico\stop.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -178,7 +181,7 @@
   <data name="copy" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ico\copy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="minus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\ico\minus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="pause" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ico\pause.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -200,6 +200,7 @@
             this.Controls.Add(this.groupBoxAbout);
             this.Controls.Add(this.labelTitle);
             this.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 12F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;

@@ -234,5 +234,8 @@
   <ItemGroup>
     <None Include="ico\minus.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ico\pause.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

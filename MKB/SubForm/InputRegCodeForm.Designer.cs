@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InputRegCodeForm));
             this.labelInput = new System.Windows.Forms.Label();
             this.textBoxRegCode = new System.Windows.Forms.TextBox();
             this.buttonCancel = new System.Windows.Forms.Button();
@@ -86,6 +87,7 @@
             this.Controls.Add(this.textBoxRegCode);
             this.Controls.Add(this.labelInput);
             this.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 12F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;

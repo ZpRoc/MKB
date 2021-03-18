@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GrpConfigForm));
             this.labelTitle = new System.Windows.Forms.Label();
             this.labelDescr = new System.Windows.Forms.Label();
             this.textBoxDescr = new System.Windows.Forms.TextBox();
@@ -276,6 +277,7 @@
             this.Controls.Add(this.labelTitle);
             this.Controls.Add(this.comboBoxParamPos);
             this.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 12F);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;

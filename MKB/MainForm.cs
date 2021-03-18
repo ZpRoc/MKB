@@ -149,9 +149,12 @@ namespace MKB
                         {
                             // 更新状态
                             timerMain.Enabled     = false;
-                            progressBarMain.Value = 0;
 
-                            this.WindowState = FormWindowState.Normal;       // 恢复当前窗口
+                            this.Invoke(new EventHandler(delegate
+                            {
+                                progressBarMain.Value = 0;
+                                this.WindowState      = FormWindowState.Normal;       // 恢复当前窗口
+                            }));
                         }
                     }
                     else
@@ -159,7 +162,10 @@ namespace MKB
                         // 延时未到，更新进度条
                         if (Convert.ToInt32(m_cmdParsedList[m_runStep].m_cmdConfig.m_delay) != 0)
                         {
-                            progressBarMain.Value = Convert.ToInt32(curTime / allTime * 100.0);
+                            this.Invoke(new EventHandler(delegate
+                            {
+                                progressBarMain.Value = Convert.ToInt32(curTime / allTime * 100.0);
+                            }));
                         }
 
                         return;
@@ -383,6 +389,11 @@ namespace MKB
                 else if (e.KeyCode == Keys.F5)
                 {
                     toolStripMenuItemRun_Click(null, null);
+                }
+                // 暂停 Alt+F5
+                else if (e.Alt && e.KeyCode == Keys.F5)
+                {
+                    toolStripMenuItemPause_Click(null, null);
                 }
                 // 停止 Ctrl+F5
                 else if (e.Control && e.KeyCode == Keys.F5)
@@ -712,6 +723,23 @@ namespace MKB
         }
 
         /// <summary>
+        /// 右键菜单栏 暂停
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void toolStripMenuItemPause_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
         /// 右键菜单栏 停止
         /// </summary>
         /// <param name="sender"></param>
@@ -725,6 +753,9 @@ namespace MKB
 
                 // 更新状态
                 progressBarMain.Value = 0;
+
+                // 恢复当前窗口
+                this.WindowState = FormWindowState.Normal;
             }
             catch (Exception ex)
             {
