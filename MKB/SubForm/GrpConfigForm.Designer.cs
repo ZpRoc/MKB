@@ -156,9 +156,10 @@
             this.textBoxIndexE.Name = "textBoxIndexE";
             this.textBoxIndexE.Size = new System.Drawing.Size(64, 33);
             this.textBoxIndexE.TabIndex = 3;
+            this.textBoxIndexE.Tag = "0";
             this.textBoxIndexE.Text = "0";
             this.textBoxIndexE.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxIndexE.Leave += new System.EventHandler(this.textBoxIndexE_Leave);
+            this.textBoxIndexE.TextChanged += new System.EventHandler(this.textBoxIndexE_TextChanged);
             // 
             // textBoxIndexS
             // 
@@ -167,9 +168,10 @@
             this.textBoxIndexS.Name = "textBoxIndexS";
             this.textBoxIndexS.Size = new System.Drawing.Size(64, 33);
             this.textBoxIndexS.TabIndex = 2;
+            this.textBoxIndexS.Tag = "0";
             this.textBoxIndexS.Text = "0";
             this.textBoxIndexS.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxIndexS.Leave += new System.EventHandler(this.textBoxIndexS_Leave);
+            this.textBoxIndexS.TextChanged += new System.EventHandler(this.textBoxIndexS_TextChanged);
             // 
             // labelIndexDelta
             // 
@@ -177,10 +179,10 @@
             this.labelIndexDelta.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.labelIndexDelta.Location = new System.Drawing.Point(260, 114);
             this.labelIndexDelta.Name = "labelIndexDelta";
-            this.labelIndexDelta.Size = new System.Drawing.Size(62, 25);
+            this.labelIndexDelta.Size = new System.Drawing.Size(92, 25);
             this.labelIndexDelta.TabIndex = 104;
-            this.labelIndexDelta.Tag = "Δ= ";
-            this.labelIndexDelta.Text = "Δ= 0";
+            this.labelIndexDelta.Tag = new string[] { "Δ= ", "Δ= 无效", "Δ= 非数值", "Δ= 非整型" };
+            this.labelIndexDelta.Text = "Δ= 无效";
             this.labelIndexDelta.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelParamPos

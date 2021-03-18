@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 
 using MKB.DataHandle;
@@ -67,36 +68,59 @@ namespace MKB.SubForm
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
-        /// 计算 Delta，判断输入是否正确
+        /// 判断输入是否正确，更新计算 Delta
+        /// labelIndexDelta.Tag = new string[] { "Δ= ", "Δ= 无效", "Δ= 非数值", "Δ= 非整型" };
         /// </summary>
-        /// <param name="times"></param>
-        /// <param name="indexS"></param>
-        /// <param name="indexE"></param>
-        /// <param name="delta"></param>
+        /// <param name="toolTimes"></param>
+        /// <param name="toolIndexS"></param>
+        /// <param name="toolIndexE"></param>
+        /// <param name="toolDelta"></param>
         /// <returns></returns>
-        private string CalcDelta(ref NumericUpDown times, ref TextBox indexS, ref TextBox indexE, ref Label delta)
+        private string UpdateDelta(ref NumericUpDown toolTimes, ref TextBox toolIndexS, ref TextBox toolIndexE, ref Label toolDelta)
         {
-            // 判断输入
-            int s = 0;
-            int e = 0;
-            if (!(int.TryParse(indexS.Text, out s) && int.TryParse(indexE.Text, out e)))
+            // 循环，循环次数大于 1
+            if (Convert.ToInt32(toolTimes.Value) > 1)
             {
-                return "输入非整型数据，输入有误！";
-            }
+                // 控件使能
+                toolIndexS.Enabled = true;
+                toolIndexE.Enabled = true;
+                toolDelta.Enabled  = true;
 
-            // 计算 labelIndexDelta
-            int div = Convert.ToInt32(times.Value) - 1;
-            if (div != 0 && (e - s) % div == 0)
-            {
-                delta.Text = delta.Tag.ToString() + ((e - s) / div).ToString();
+                // 数值转换
+                int indexS = 0;
+                int indexE = 0;
+                if (!(int.TryParse(toolIndexS.Text, out indexS) && int.TryParse(toolIndexE.Text, out indexE)))
+                {
+                    toolDelta.Text = ((string[])toolDelta.Tag)[2];
+                    return "循环索引为非数值，输入有误！";
+                }
+
+                // 计算 Delta
+                int div = Convert.ToInt32(toolTimes.Value) - 1;
+                if (div != 0 && (indexE - indexS) % div == 0)
+                {
+                    toolDelta.Text = ((string[])toolDelta.Tag)[0] + ((indexE - indexS) / div).ToString();
+                }
+                else
+                {
+                    toolDelta.Text = ((string[])toolDelta.Tag)[3];
+                    return "Delta 为非整型数据，输入有误！";
+                }
             }
+            // 不循环，循环次数为 1
             else
             {
-                delta.Text = delta.Tag.ToString() + "0";
-                return "Delta 非整型数据，输入有误！";
+                // 控件使能
+                toolIndexS.Enabled = false;
+                toolIndexE.Enabled = false;
+                toolDelta.Enabled  = false;
+
+                // 控件幅值
+                toolIndexS.Text = toolIndexS.Tag.ToString();
+                toolIndexE.Text = toolIndexE.Tag.ToString();
+                toolDelta.Text  = ((string[])toolDelta.Tag)[1];
             }
 
-            // 返回
             return null;
         }
 
@@ -109,24 +133,7 @@ namespace MKB.SubForm
         {
             try
             {
-                if (Convert.ToInt32(numericUpDownTimes.Value) == 1)
-                {
-                    textBoxIndexS.Enabled   = false;
-                    textBoxIndexE.Enabled   = false;
-                    labelIndexDelta.Enabled = false;
-
-                    textBoxIndexS.Text   = "0";
-                    textBoxIndexE.Text   = "0";
-                    labelIndexDelta.Text = labelIndexDelta.Tag.ToString() + "0";
-                }
-                else
-                {
-                    textBoxIndexS.Enabled   = true;
-                    textBoxIndexE.Enabled   = true;
-                    labelIndexDelta.Enabled = true;
-
-                    textBoxIndexS_Leave(null, null);
-                }
+                UpdateDelta(ref numericUpDownTimes, ref textBoxIndexS, ref textBoxIndexE, ref labelIndexDelta);
             }
             catch (Exception ex)
             {
@@ -135,20 +142,15 @@ namespace MKB.SubForm
         }
 
         /// <summary>
-        /// 控件不再是活动控件，判断输入是否正确
+        /// 起始索引 值改变事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void textBoxIndexS_Leave(object sender, EventArgs e)
+        private void textBoxIndexS_TextChanged(object sender, EventArgs e)
         {
             try
             {
-                string str = CalcDelta(ref numericUpDownTimes, ref textBoxIndexS, ref textBoxIndexE, ref labelIndexDelta);
-                if (!string.IsNullOrWhiteSpace(str))
-                {
-                    MessageBox.Show(str, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
+                UpdateDelta(ref numericUpDownTimes, ref textBoxIndexS, ref textBoxIndexE, ref labelIndexDelta);
             }
             catch (Exception ex)
             {
@@ -157,15 +159,15 @@ namespace MKB.SubForm
         }
 
         /// <summary>
-        /// 控件不再是活动控件，判断输入是否正确
+        /// 终止索引 值改变事件
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void textBoxIndexE_Leave(object sender, EventArgs e)
+        private void textBoxIndexE_TextChanged(object sender, EventArgs e)
         {
             try
             {
-                textBoxIndexS_Leave(null, null);
+                UpdateDelta(ref numericUpDownTimes, ref textBoxIndexS, ref textBoxIndexE, ref labelIndexDelta);
             }
             catch (Exception ex)
             {
@@ -244,7 +246,7 @@ namespace MKB.SubForm
             try
             {
                 // 简单的保护，后续可优化
-                if (Convert.ToInt32(numericUpDownTimes.Value) > 1 && labelIndexDelta.Text == labelIndexDelta.Tag.ToString() + "0")
+                if (((string[])labelIndexDelta.Tag).Contains(labelIndexDelta.Text))
                 {
                     MessageBox.Show("循环次数或循环索引输入有误！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -340,7 +342,5 @@ namespace MKB.SubForm
             return new GrpConfig(Convert.ToInt32(numericUpDownTimes.Value), textBoxIndexS.Text, textBoxIndexE.Text,
                                  comboBoxParamPos.Items, textBoxDescr.Text);
         }
-
-        
     }
 }
