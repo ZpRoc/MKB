@@ -14,7 +14,7 @@ namespace MKB
     public partial class MainForm : Form
     {
         // 版本
-        string m_dateVersion = "20210317";
+        string m_dateVersion = "20210318";
         string m_pushVersion = "V2.0.0";
 
         // 是否过期
@@ -29,7 +29,7 @@ namespace MKB
         TreeViewCtrl m_treeViewCtrl = new TreeViewCtrl();
 
         // 命令列表 & 命令运行标志
-        List<CmdConfig> m_cmdConfigList = new List<CmdConfig>();
+        List<CmdParsed> m_cmdParsedList = new List<CmdParsed>();
         int m_runStep      = 0;                 // 命令列表运行的步数
         int m_runStatus    = 1;                 // 0 表示延时状态，1 表示运行状态
         DateTime m_runTime = DateTime.Now;      // 用以记录命令运行结束的时间 (延时用)
@@ -43,8 +43,8 @@ namespace MKB
 
         }
 
-        // -------------------------------------------------------------------------------- //
         // ----------------------------------- 运行主体 ------------------------------------ //
+        // -------------------------------------------------------------------------------- //
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
@@ -75,30 +75,30 @@ namespace MKB
                     }));
 
                     // -------------------- 鼠标 -------------------- //
-                    if (m_cmdConfigList[m_runStep].m_type == CmdConfigForm.m_TYPEs[0])
+                    if (m_cmdParsedList[m_runStep].m_cmdConfig.m_type == CmdConfigForm.m_TYPEs[0])
                     {
                         // ---------- 移动 ---------- //
-                        if (m_cmdConfigList[m_runStep].m_op == CmdConfigForm.m_MOUSE_OPs[0])
+                        if (m_cmdParsedList[m_runStep].m_cmdConfig.m_op == CmdConfigForm.m_MOUSE_OPs[0])
                         {
-                            m_mouseCtrl.MouseMove(Convert.ToInt32(m_cmdConfigList[m_runStep].m_posX), Convert.ToInt32(m_cmdConfigList[m_runStep].m_posY));
+                            m_mouseCtrl.MouseMove(Convert.ToInt32(m_cmdParsedList[m_runStep].m_cmdConfig.m_posX), Convert.ToInt32(m_cmdParsedList[m_runStep].m_cmdConfig.m_posY));
                         }
 
                         // ---------- 左键单击 ---------- //
-                        else if (m_cmdConfigList[m_runStep].m_op == CmdConfigForm.m_MOUSE_OPs[1])
+                        else if (m_cmdParsedList[m_runStep].m_cmdConfig.m_op == CmdConfigForm.m_MOUSE_OPs[1])
                         {
-                            m_mouseCtrl.MouseLeftClick(Convert.ToInt32(m_cmdConfigList[m_runStep].m_posX), Convert.ToInt32(m_cmdConfigList[m_runStep].m_posY));
+                            m_mouseCtrl.MouseLeftClick(Convert.ToInt32(m_cmdParsedList[m_runStep].m_cmdConfig.m_posX), Convert.ToInt32(m_cmdParsedList[m_runStep].m_cmdConfig.m_posY));
                         }
 
                         // ---------- 左键双击 ---------- //
-                        else if (m_cmdConfigList[m_runStep].m_op == CmdConfigForm.m_MOUSE_OPs[2])
+                        else if (m_cmdParsedList[m_runStep].m_cmdConfig.m_op == CmdConfigForm.m_MOUSE_OPs[2])
                         {
-                            m_mouseCtrl.MouseLeftDoubleClick(Convert.ToInt32(m_cmdConfigList[m_runStep].m_posX), Convert.ToInt32(m_cmdConfigList[m_runStep].m_posY));
+                            m_mouseCtrl.MouseLeftDoubleClick(Convert.ToInt32(m_cmdParsedList[m_runStep].m_cmdConfig.m_posX), Convert.ToInt32(m_cmdParsedList[m_runStep].m_cmdConfig.m_posY));
                         }
 
                         // ---------- 右键单击 ---------- //
-                        else if (m_cmdConfigList[m_runStep].m_op == CmdConfigForm.m_MOUSE_OPs[3])
+                        else if (m_cmdParsedList[m_runStep].m_cmdConfig.m_op == CmdConfigForm.m_MOUSE_OPs[3])
                         {
-                            m_mouseCtrl.MouseRightClick(Convert.ToInt32(m_cmdConfigList[m_runStep].m_posX), Convert.ToInt32(m_cmdConfigList[m_runStep].m_posY));
+                            m_mouseCtrl.MouseRightClick(Convert.ToInt32(m_cmdParsedList[m_runStep].m_cmdConfig.m_posX), Convert.ToInt32(m_cmdParsedList[m_runStep].m_cmdConfig.m_posY));
                         }
 
                         // ---------- 更新状态 ---------- //
@@ -107,24 +107,24 @@ namespace MKB
                     }
 
                     // -------------------- 键盘 -------------------- //
-                    else if (m_cmdConfigList[m_runStep].m_type == CmdConfigForm.m_TYPEs[1])
+                    else if (m_cmdParsedList[m_runStep].m_cmdConfig.m_type == CmdConfigForm.m_TYPEs[1])
                     {
                         // ---------- 文本输入 ---------- //
-                        if (m_cmdConfigList[m_runStep].m_op == CmdConfigForm.m_KEYBD_OPs[0])
+                        if (m_cmdParsedList[m_runStep].m_cmdConfig.m_op == CmdConfigForm.m_KEYBD_OPs[0])
                         {
-                            m_keybdCtrl.KeybdText(m_cmdConfigList[m_runStep].m_text);
+                            m_keybdCtrl.KeybdText(m_cmdParsedList[m_runStep].m_cmdConfig.m_text);
                         }
 
                         // ---------- 组合键1 ---------- //
-                        else if (m_cmdConfigList[m_runStep].m_op == CmdConfigForm.m_KEYBD_OPs[1])
+                        else if (m_cmdParsedList[m_runStep].m_cmdConfig.m_op == CmdConfigForm.m_KEYBD_OPs[1])
                         {
-                            m_keybdCtrl.KeybdComb(m_cmdConfigList[m_runStep].m_text);
+                            m_keybdCtrl.KeybdComb(m_cmdParsedList[m_runStep].m_cmdConfig.m_text);
                         }
 
                         // ---------- 组合键2 ---------- //
-                        else if (m_cmdConfigList[m_runStep].m_op == CmdConfigForm.m_KEYBD_OPs[2])
+                        else if (m_cmdParsedList[m_runStep].m_cmdConfig.m_op == CmdConfigForm.m_KEYBD_OPs[2])
                         {
-                            m_keybdCtrl.KeybdComb(m_cmdConfigList[m_runStep].m_text);
+                            m_keybdCtrl.KeybdComb(m_cmdParsedList[m_runStep].m_cmdConfig.m_text);
                         }
 
                         // ---------- 更新状态 ---------- //
@@ -136,12 +136,12 @@ namespace MKB
                 {
                     // -------------------- 延时控制 -------------------- //
                     double curTime = (DateTime.Now - m_runTime).TotalSeconds;
-                    double allTime = Convert.ToDouble(m_cmdConfigList[m_runStep].m_time);
+                    double allTime = Convert.ToDouble(m_cmdParsedList[m_runStep].m_cmdConfig.m_delay);
 
                     if (curTime > allTime)
                     {
                         // 判断是否已经遍历完，未完成则继续，完成则禁止定时器
-                        if (++m_runStep < m_cmdConfigList.Count)
+                        if (++m_runStep < m_cmdParsedList.Count)
                         {
                             m_runStatus = 1;
                         }
@@ -157,7 +157,7 @@ namespace MKB
                     else
                     {
                         // 延时未到，更新进度条
-                        if (Convert.ToInt32(m_cmdConfigList[m_runStep].m_time) != 0)
+                        if (Convert.ToInt32(m_cmdParsedList[m_runStep].m_cmdConfig.m_delay) != 0)
                         {
                             progressBarMain.Value = Convert.ToInt32(curTime / allTime * 100.0);
                         }
@@ -172,8 +172,8 @@ namespace MKB
             }
         }
         
-        // -------------------------------------------------------------------------------- //
         // ----------------------------- menuStripMain Events ----------------------------- //
+        // -------------------------------------------------------------------------------- //
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
@@ -326,8 +326,8 @@ namespace MKB
             }
         }
 
-        // -------------------------------------------------------------------------------- //
         // ------------------------- contextMenuStripMain Events -------------------------- //
+        // -------------------------------------------------------------------------------- //
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
@@ -697,13 +697,12 @@ namespace MKB
                 // 最小化当前窗口
                 this.WindowState = FormWindowState.Minimized;
 
-                // 遍历 treeViewMain，解析数据至 m_cmdConfigList
-
-
+                // 遍历 treeViewMain，解析数据至 m_cmdParsedList
+                m_cmdParsedList = m_treeViewCtrl.ParsingTree(treeViewMain);
 
                 // 初始化状态变量，并使能定时器
-                m_runStep = 0;              // 从头运行
-                m_runStatus = 1;
+                m_runStep         = 0;              // 从头运行
+                m_runStatus       = 1;
                 timerMain.Enabled = true;
             }
             catch (Exception ex)
@@ -803,8 +802,8 @@ namespace MKB
             }
         }
 
-        // -------------------------------------------------------------------------------- //
         // ----------------------------- treeViewMain Events ------------------------------ //
+        // -------------------------------------------------------------------------------- //
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
@@ -835,8 +834,8 @@ namespace MKB
             }
         }
 
-        // -------------------------------------------------------------------------------- //
         // --------------------------------- 软件过期保护 ---------------------------------- //
+        // -------------------------------------------------------------------------------- //
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
@@ -894,8 +893,8 @@ namespace MKB
             }
         }
 
-        // -------------------------------------------------------------------------------- //
         // ------------------------------------- 测试 ------------------------------------- //
+        // -------------------------------------------------------------------------------- //
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
@@ -905,7 +904,7 @@ namespace MKB
         /// <param name="e"></param>
         private void labelTitle_DoubleClick(object sender, EventArgs e)
         {
-            
+            m_treeViewCtrl.ParsingTree(treeViewMain);
         }
     }
 }

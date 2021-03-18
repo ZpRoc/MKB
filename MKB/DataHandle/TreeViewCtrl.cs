@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
+using System.Collections.Generic;
+
+using MKB.SubForm;
 
 
 namespace MKB.DataHandle
@@ -30,10 +34,93 @@ namespace MKB.DataHandle
     /// </summary>
     public class TreeViewCtrl
     {
-
-
+        // --------------------------------- ParsingData ---------------------------------- //
         // -------------------------------------------------------------------------------- //
+        // -------------------------------------------------------------------------------- //
+
+        /// <summary>
+        /// 根据循环参数 更新 (cmdParsed.m_cmdConfig)
+        /// </summary>
+        /// <param name="paramIndex"></param>
+        /// <param name="paramPos"></param>
+        /// <param name="cmdParsed"></param>
+        private void UpdateCmdParsed(string paramIndex, string[] paramPos, ref CmdParsed cmdParsed)
+        {
+            foreach (string pos in paramPos)
+            {
+                if (pos.Substring(0, 3) == cmdParsed.m_cmd)
+                {
+                    // m_PARAMs = {"Text", "Descr", "PosX", "PosY", "Delay"}
+                    if (pos.Substring(4, pos.Length - 4) == GrpConfigForm.m_PARAMs[0])
+                    {
+                        cmdParsed.m_cmdConfig.m_text = paramIndex;
+                    }
+                    else if (pos.Substring(4, pos.Length - 4) == GrpConfigForm.m_PARAMs[1])
+                    {
+                        cmdParsed.m_cmdConfig.m_descr = paramIndex;
+                    }
+                    else if (pos.Substring(4, pos.Length - 4) == GrpConfigForm.m_PARAMs[2])
+                    {
+                        cmdParsed.m_cmdConfig.m_posX = paramIndex;
+                    }
+                    else if (pos.Substring(4, pos.Length - 4) == GrpConfigForm.m_PARAMs[3])
+                    {
+                        cmdParsed.m_cmdConfig.m_posY = paramIndex;
+                    }
+                    else if (pos.Substring(4, pos.Length - 4) == GrpConfigForm.m_PARAMs[4])
+                    {
+                        cmdParsed.m_cmdConfig.m_delay = paramIndex;
+                    }
+                }
+                else
+                {
+                    continue;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 解析数据 整个目录，TreeView --> List<CmdParsed>
+        /// </summary>
+        /// <param name="treeView"></param>
+        /// <returns></returns>
+        public List<CmdParsed> ParsingTree(TreeView treeView)
+        {
+            // -------------------- 初始化 -------------------- //
+            List<CmdParsed> cmdParsedList = new List<CmdParsed>();
+
+            // -------------------- 循环 命令组节点 -------------------- //
+            for (int g = 0; g < treeView.Nodes.Count; g++)
+            {
+                // ---------- 读取 命令组信息 ---------- //
+                GrpConfig grpConfig = (GrpConfig)treeView.Nodes[g].Tag;
+
+                // ---------- 命令组 循环次数 ---------- //
+                for (int t = 0; t < grpConfig.m_times; t++)
+                {
+                    // ---------- 循环 命令节点 ---------- //
+                    for (int c = 0; c < treeView.Nodes[g].Nodes.Count; c++)
+                    {
+                        // 初始化 命令解析 数据 (这里的 CmdConfig 需要深度复制)
+                        CmdParsed cmdParsed = new CmdParsed("G" + treeView.Nodes[g].Index.ToString("#00"),
+                                                            "C" + treeView.Nodes[g].Nodes[c].Index.ToString("#00"),
+                                                            t + 1, new CmdConfig((CmdConfig)treeView.Nodes[g].Nodes[c].Tag));
+
+                        // 根据循环参数 (grpConfig.m_paramPos) 更新 (cmdParsed.m_cmdConfig)
+                        if (!string.IsNullOrEmpty(grpConfig.m_paramPos))
+                            UpdateCmdParsed((grpConfig.m_indexS + grpConfig.m_indexD * t).ToString(), grpConfig.m_paramPos.Split(grpConfig.m_SEG_CHAR), ref cmdParsed);
+
+                        // Add
+                        cmdParsedList.Add(cmdParsed);
+                    }
+                }
+            }
+
+            return cmdParsedList;
+        }
+
         // ----------------------------------- Control ------------------------------------ //
+        // -------------------------------------------------------------------------------- //
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
@@ -252,8 +339,8 @@ namespace MKB.DataHandle
             return null;
         }
 
-        // -------------------------------------------------------------------------------- //
         // ---------------------------------- Functions ----------------------------------- //
+        // -------------------------------------------------------------------------------- //
         // -------------------------------------------------------------------------------- //
 
         /// <summary>

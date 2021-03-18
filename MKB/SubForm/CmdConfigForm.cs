@@ -17,6 +17,12 @@ namespace MKB.SubForm
         MouseControl m_mouseCtrl = new MouseControl();
         KeybdControl m_keybdCtrl = new KeybdControl();
 
+        // 常量
+        public static readonly string[] m_TYPEs     = {"鼠标", "键盘"};
+        public static readonly string[] m_MOUSE_OPs = {"移动", "左键单击", "左键双击", "右键单击"};
+        public static readonly string[] m_KEYBD_OPs = {"文本输入", "组合键1", "组合键2"};
+        public static readonly string[] m_TIMEs     = {"秒"};
+
         public CmdConfigForm()
         {
             InitializeComponent();
@@ -37,14 +43,9 @@ namespace MKB.SubForm
             SetComponent(m_cmdConfig);
         }
 
-        // -------------------------------------------------------------------------------- //
         // --------------------------- ComponentInitialization ---------------------------- //
         // -------------------------------------------------------------------------------- //
-
-        public static readonly string[] m_TYPEs     = {"鼠标", "键盘"};
-        public static readonly string[] m_MOUSE_OPs = {"移动", "左键单击", "左键双击", "右键单击"};
-        public static readonly string[] m_KEYBD_OPs = {"文本输入", "组合键1", "组合键2"};
-        public static readonly string[] m_TIMEs     = {"秒"};
+        // -------------------------------------------------------------------------------- //
 
         private void ComponentInitialization()
         {
@@ -55,8 +56,8 @@ namespace MKB.SubForm
             comboBoxDelay.SelectedIndex = 0;
         }
 
-        // -------------------------------------------------------------------------------- //
         // ------------------------------------ Events ------------------------------------ //
+        // -------------------------------------------------------------------------------- //
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
@@ -321,8 +322,8 @@ namespace MKB.SubForm
             }
         }
 
-        // -------------------------------------------------------------------------------- //
         // ---------------------------------- Functions ----------------------------------- //
+        // -------------------------------------------------------------------------------- //
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
@@ -336,7 +337,7 @@ namespace MKB.SubForm
             textBoxPosY.Text           = cmdConfig.m_posY;
             comboBoxOp.SelectedItem    = cmdConfig.m_op;
             textBoxOp.Text             = cmdConfig.m_text;
-            textBoxDelay.Text          = cmdConfig.m_time;
+            textBoxDelay.Text          = cmdConfig.m_delay;
             comboBoxDelay.SelectedItem = cmdConfig.m_unit;
             textBoxDescr.Text          = cmdConfig.m_descr;
         }

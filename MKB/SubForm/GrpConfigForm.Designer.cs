@@ -181,7 +181,11 @@
             this.labelIndexDelta.Name = "labelIndexDelta";
             this.labelIndexDelta.Size = new System.Drawing.Size(92, 25);
             this.labelIndexDelta.TabIndex = 104;
-            this.labelIndexDelta.Tag = new string[] { "Δ= ", "Δ= 无效", "Δ= 非数值", "Δ= 非整型" };
+            this.labelIndexDelta.Tag = new string[] {
+        "Δ= ",
+        "Δ= 无效",
+        "Δ= 非数值",
+        "Δ= 非整型"};
             this.labelIndexDelta.Text = "Δ= 无效";
             this.labelIndexDelta.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -211,12 +215,6 @@
             this.comboBoxParam.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxParam.Font = new System.Drawing.Font("YaHei Consolas Hybrid", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.comboBoxParam.FormattingEnabled = true;
-            this.comboBoxParam.Items.AddRange(new object[] {
-            "Text",
-            "Descr",
-            "PosX",
-            "PosY",
-            "Delay"});
             this.comboBoxParam.Location = new System.Drawing.Point(296, 206);
             this.comboBoxParam.Name = "comboBoxParam";
             this.comboBoxParam.Size = new System.Drawing.Size(76, 33);

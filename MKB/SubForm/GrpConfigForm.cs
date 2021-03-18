@@ -12,6 +12,9 @@ namespace MKB.SubForm
         // 命令组 配置类
         public GrpConfig m_grpConfig = new GrpConfig();
 
+        // 常量
+        public static readonly string[] m_PARAMs = {"Text", "Descr", "PosX", "PosY", "Delay"};
+
         public GrpConfigForm()
         {
             InitializeComponent();
@@ -30,80 +33,64 @@ namespace MKB.SubForm
             // 相关控件初始化
             ComponentInitialization();
 
-            // 若指定 grpConfig，则给相关控件赋值
+            // 若指定 grpConfig 和 treeNode，则给相关控件赋值
             m_grpConfig = grpConfig;
-            SetComponent(m_grpConfig);
-
-            // 更新 comboBoxCmd 和 comboBoxParam
-            UpdateComboBox(treeNode);
+            SetComponent(m_grpConfig, treeNode);
 
             // 循环次数 值改变事件
             numericUpDownTimes_ValueChanged(null, null);
         }
 
-        // -------------------------------------------------------------------------------- //
         // --------------------------- ComponentInitialization ---------------------------- //
+        // -------------------------------------------------------------------------------- //
         // -------------------------------------------------------------------------------- //
 
         private void ComponentInitialization()
         {
-            
+            comboBoxParam.Items.AddRange(m_PARAMs);
+            comboBoxParam.SelectedIndex = 0;
         }
 
-        private void UpdateComboBox(TreeNode treeNode)
-        {
-            comboBoxCmd.Items.Clear();
-            foreach (TreeNode node in treeNode.Nodes)
-            {
-                comboBoxCmd.Items.Add(node.Text);
-            }
-
-            if (comboBoxParamPos.Items.Count > 0)       comboBoxParamPos.SelectedIndex = 0;
-            if (comboBoxCmd.Items.Count      > 0)       comboBoxCmd.SelectedIndex      = 0;
-            if (comboBoxParam.Items.Count    > 0)       comboBoxParam.SelectedIndex    = 0;
-        }
-
-        // -------------------------------------------------------------------------------- //
         // ------------------------------ 保护循环参数输入正确 ------------------------------- //
+        // -------------------------------------------------------------------------------- //
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
         /// 判断输入是否正确，更新计算 Delta
         /// labelIndexDelta.Tag = new string[] { "Δ= ", "Δ= 无效", "Δ= 非数值", "Δ= 非整型" };
         /// </summary>
-        /// <param name="toolTimes"></param>
-        /// <param name="toolIndexS"></param>
-        /// <param name="toolIndexE"></param>
-        /// <param name="toolDelta"></param>
         /// <returns></returns>
-        private string UpdateDelta(ref NumericUpDown toolTimes, ref TextBox toolIndexS, ref TextBox toolIndexE, ref Label toolDelta)
+        private string UpdateDelta()
         {
             // 循环，循环次数大于 1
-            if (Convert.ToInt32(toolTimes.Value) > 1)
+            if (Convert.ToInt32(numericUpDownTimes.Value) > 1)
             {
                 // 控件使能
-                toolIndexS.Enabled = true;
-                toolIndexE.Enabled = true;
-                toolDelta.Enabled  = true;
+                textBoxIndexS.Enabled     = true;
+                textBoxIndexE.Enabled     = true;
+                labelIndexDelta.Enabled   = true;
+                comboBoxParamPos.Enabled  = true;
+                buttonParamPosAdd.Enabled = true;
+                buttonParamPosDel.Enabled = true;
+                comboBoxCmd.Enabled       = true;
+                comboBoxParam.Enabled     = true;
 
                 // 数值转换
-                int indexS = 0;
-                int indexE = 0;
-                if (!(int.TryParse(toolIndexS.Text, out indexS) && int.TryParse(toolIndexE.Text, out indexE)))
+                if (!(int.TryParse(textBoxIndexS.Text, out int indexS) && int.TryParse(textBoxIndexE.Text, out int indexE)))
                 {
-                    toolDelta.Text = ((string[])toolDelta.Tag)[2];
+                    labelIndexDelta.Text = ((string[])labelIndexDelta.Tag)[2];
                     return "循环索引为非数值，输入有误！";
                 }
 
                 // 计算 Delta
-                int div = Convert.ToInt32(toolTimes.Value) - 1;
+                int div = Convert.ToInt32(numericUpDownTimes.Value) - 1;
                 if (div != 0 && (indexE - indexS) % div == 0)
                 {
-                    toolDelta.Text = ((string[])toolDelta.Tag)[0] + ((indexE - indexS) / div).ToString();
+                    labelIndexDelta.Text = ((string[])labelIndexDelta.Tag)[0] + ((indexE - indexS) / div).ToString();
                 }
                 else
                 {
-                    toolDelta.Text = ((string[])toolDelta.Tag)[3];
+                    labelIndexDelta.Text = ((string[])labelIndexDelta.Tag)[3];
                     return "Delta 为非整型数据，输入有误！";
                 }
             }
@@ -111,14 +98,20 @@ namespace MKB.SubForm
             else
             {
                 // 控件使能
-                toolIndexS.Enabled = false;
-                toolIndexE.Enabled = false;
-                toolDelta.Enabled  = false;
+                textBoxIndexS.Enabled     = false;
+                textBoxIndexE.Enabled     = false;
+                labelIndexDelta.Enabled   = false;
+                comboBoxParamPos.Enabled  = false;
+                buttonParamPosAdd.Enabled = false;
+                buttonParamPosDel.Enabled = false;
+                comboBoxCmd.Enabled       = false;
+                comboBoxParam.Enabled     = false;
 
                 // 控件幅值
-                toolIndexS.Text = toolIndexS.Tag.ToString();
-                toolIndexE.Text = toolIndexE.Tag.ToString();
-                toolDelta.Text  = ((string[])toolDelta.Tag)[1];
+                textBoxIndexS.Text   = textBoxIndexS.Tag.ToString();
+                textBoxIndexE.Text   = textBoxIndexE.Tag.ToString();
+                labelIndexDelta.Text = ((string[])labelIndexDelta.Tag)[1];
+                comboBoxParamPos.Items.Clear();
             }
 
             return null;
@@ -133,7 +126,7 @@ namespace MKB.SubForm
         {
             try
             {
-                UpdateDelta(ref numericUpDownTimes, ref textBoxIndexS, ref textBoxIndexE, ref labelIndexDelta);
+                UpdateDelta();
             }
             catch (Exception ex)
             {
@@ -150,7 +143,7 @@ namespace MKB.SubForm
         {
             try
             {
-                UpdateDelta(ref numericUpDownTimes, ref textBoxIndexS, ref textBoxIndexE, ref labelIndexDelta);
+                UpdateDelta();
             }
             catch (Exception ex)
             {
@@ -167,7 +160,7 @@ namespace MKB.SubForm
         {
             try
             {
-                UpdateDelta(ref numericUpDownTimes, ref textBoxIndexS, ref textBoxIndexE, ref labelIndexDelta);
+                UpdateDelta();
             }
             catch (Exception ex)
             {
@@ -175,8 +168,8 @@ namespace MKB.SubForm
             }
         }
 
-        // -------------------------------------------------------------------------------- //
         // ------------------------------------ Events ------------------------------------ //
+        // -------------------------------------------------------------------------------- //
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
@@ -246,7 +239,7 @@ namespace MKB.SubForm
             try
             {
                 // 简单的保护，后续可优化
-                if (((string[])labelIndexDelta.Tag).Contains(labelIndexDelta.Text))
+                if (Convert.ToInt32(numericUpDownTimes.Value) > 1 && ((string[])labelIndexDelta.Tag).Contains(labelIndexDelta.Text))
                 {
                     MessageBox.Show("循环次数或循环索引输入有误！", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -312,24 +305,49 @@ namespace MKB.SubForm
             }
         }
 
-        // -------------------------------------------------------------------------------- //
         // ---------------------------------- Functions ----------------------------------- //
+        // -------------------------------------------------------------------------------- //
         // -------------------------------------------------------------------------------- //
 
         /// <summary>
         /// 设置相关控件的属性
         /// </summary>
         /// <param name="grpConfig"></param>
-        public void SetComponent(GrpConfig grpConfig)
+        /// <param name="treeNode"></param>
+        public void SetComponent(GrpConfig grpConfig, TreeNode treeNode)
         {
+            // 常规控件
             numericUpDownTimes.Value = m_grpConfig.m_times;
-            textBoxIndexS.Text       = m_grpConfig.m_indexS;
-            textBoxIndexE.Text       = m_grpConfig.m_indexE;
+            textBoxIndexS.Text       = m_grpConfig.m_indexS.ToString();
+            textBoxIndexE.Text       = m_grpConfig.m_indexE.ToString();
             textBoxDescr.Text        = m_grpConfig.m_descr;
 
-            foreach (object item in m_grpConfig.m_paramPos)
+            // ParamPos 已经指定的循环参数位置
+            comboBoxParamPos.Items.Clear();
+            if (!string.IsNullOrWhiteSpace(m_grpConfig.m_paramPos))
             {
-                comboBoxParamPos.Items.Add(item.ToString());
+                foreach (string item in m_grpConfig.m_paramPos.Split(m_grpConfig.m_SEG_CHAR))
+                {
+                    comboBoxParamPos.Items.Add(item.ToString());
+                }
+            }
+            if (comboBoxParamPos.Items.Count > 0)
+            {
+                comboBoxParamPos.SelectedIndex = 0;
+            }
+
+            // Group 里存在的所有命令列表
+            comboBoxCmd.Items.Clear();
+            if (treeNode.Nodes.Count > 0)
+            {
+                foreach (TreeNode node in treeNode.Nodes)
+                {
+                    comboBoxCmd.Items.Add(node.Text);
+                }
+            }
+            if (comboBoxCmd.Items.Count > 0)
+            {
+                comboBoxCmd.SelectedIndex = 0;
             }
         }
 
@@ -339,8 +357,11 @@ namespace MKB.SubForm
         /// <returns></returns>
         public GrpConfig GetComponent()
         {
-            return new GrpConfig(Convert.ToInt32(numericUpDownTimes.Value), textBoxIndexS.Text, textBoxIndexE.Text,
-                                 comboBoxParamPos.Items, textBoxDescr.Text);
+            int.TryParse(labelIndexDelta.Text.Substring(3, labelIndexDelta.Text.Length - 3), out int indexD);
+
+            return new GrpConfig(Convert.ToInt32(numericUpDownTimes.Value), Convert.ToInt32(textBoxIndexS.Text),
+                                    Convert.ToInt32(textBoxIndexE.Text), indexD,
+                                    m_grpConfig.ItemToStr(comboBoxParamPos.Items), textBoxDescr.Text);
         }
     }
 }
